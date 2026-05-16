@@ -148,23 +148,6 @@
       100% { transform: translateY(0) rotate(-1deg); }
     }
 
-    /* Floating Icons over the glow */
-    .float-icon {
-      position: absolute; z-index: 11;
-      width: 70px; height: 70px; background: rgba(255,255,255,0.9); border-radius: 20px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15); backdrop-filter: blur(10px);
-      animation: floatIconAnim 5s infinite ease-in-out alternate; border: 1px solid rgba(255,255,255,0.6);
-      overflow: hidden;
-    }
-    .float-icon img {
-      width: 100%; height: 100%; object-fit: contain; padding: 12px;
-    }
-    .fi-1 { top: 20px; left: 20px; animation-delay: 0s; transform: rotate(-10deg); }
-    .fi-2 { bottom: 80px; left: -20px; animation-delay: -1.5s; transform: rotate(15deg); }
-    .fi-3 { top: 60px; right: -20px; animation-delay: -3s; transform: rotate(5deg); }
-    .fi-4 { bottom: 120px; right: -40px; animation-delay: -2s; transform: rotate(-10deg); }
-    @keyframes floatIconAnim { 0% { transform: translateY(0px) rotate(auto); } 100% { transform: translateY(-30px) rotate(auto); } }
 
     /* ── OVERLAPPING CARDS (ABAJO DEL HERO) ── */
     .cards-wrapper {
@@ -277,6 +260,15 @@
       .nav-links.active { display: flex !important; }
       .header-actions .btn-login { display: none; }
       .mobile-menu-btn { display: block; }
+      .mobile-btn-login { 
+        display: block; 
+        background: var(--primary); 
+        color: #fff !important; 
+        padding: 14px; 
+        border-radius: 12px; 
+        font-weight: 700;
+        margin-top: 10px;
+      }
       
       .hero { flex-direction: column; padding: 40px 30px 80px; text-align: center; }
       .hero-left { margin-bottom: 60px; display: flex; flex-direction: column; align-items: center; }
@@ -289,13 +281,7 @@
       .pc-mockup { margin: 0 auto; width: 90vw; height: 55vw; border-radius: 8px 8px 0 0; box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 6px #222;}
       .pc-mockup::after { height: 10px; bottom: -10px; left: -2%; width: 104%; border-radius: 2px 2px 6px 6px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
       
-      .float-icon { width: 50px; height: 50px; border-radius: 12px; }
-      .float-icon img { padding: 8px; }
-      .fi-1 { top: -10px; left: 0px; }
-      .fi-2 { bottom: 20px; left: -10px; }
-      .fi-3 { top: 20px; right: -10px; }
-      .fi-4 { bottom: 40px; right: -10px; }
-      
+
       .cards-wrapper { margin: 20px auto 60px; padding: 0 20px; }
       .cards-container { grid-template-columns: 1fr; gap: 20px; }
       .social-bar { display: none; }
@@ -323,6 +309,8 @@
       <a href="#precio">Comprar</a>
       <a href="#contacto">Contacto</a>
       <a href="privacidad.html">Privacidad</a>
+      <!-- Botón visible solo en móvil dentro del menú -->
+      <a href="app.html" class="mobile-btn-login">APP Version WEB</a>
     </nav>
     <div class="header-actions">
       <a href="app.html" class="btn-login">
@@ -352,11 +340,7 @@
         </div>
       </div>
 
-      <!-- Iconos flotantes decorativos -->
-      <div class="float-icon fi-1"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_T7o1oT9av6WEwV6djkn6s5w_35El7pBU4A&s" alt="Icon 1"></div>
-      <div class="float-icon fi-2"><img src="https://static.vecteezy.com/system/resources/thumbnails/000/356/049/small/Education__28105_29.jpg" alt="Icon 2" style="padding:0; object-fit: cover;"></div>
-      <div class="float-icon fi-3"><img src="https://cdn-icons-png.flaticon.com/512/1022/1022331.png" alt="Icon 3"></div>
-      <div class="float-icon fi-4"><img src="https://cdn-icons-png.flaticon.com/512/2370/2370279.png" alt="Icon 4"></div>
+
     </div>
   </section>
 
