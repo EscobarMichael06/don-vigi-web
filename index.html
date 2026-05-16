@@ -44,9 +44,8 @@
     /* ── SCROLL ANIMATION (REVEAL) ── */
     .reveal {
       opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .reveal.active {
       opacity: 1;
@@ -258,17 +257,9 @@
         gap: 24px; z-index: 1000; text-align: center;
       }
       .nav-links.active { display: flex !important; }
-      .header-actions .btn-login { display: none; }
+      .header-actions { display: flex; align-items: center; }
+      .header-actions .btn-login { display: block; padding: 10px 14px; font-size: 13px; margin-right: 15px; }
       .mobile-menu-btn { display: block; }
-      .mobile-btn-login { 
-        display: block; 
-        background: var(--primary); 
-        color: #fff !important; 
-        padding: 14px; 
-        border-radius: 12px; 
-        font-weight: 700;
-        margin-top: 10px;
-      }
       
       .hero { flex-direction: column; padding: 40px 30px 80px; text-align: center; }
       .hero-left { margin-bottom: 60px; display: flex; flex-direction: column; align-items: center; }
@@ -309,8 +300,6 @@
       <a href="#precio">Comprar</a>
       <a href="#contacto">Contacto</a>
       <a href="privacidad.html">Privacidad</a>
-      <!-- Botón visible solo en móvil dentro del menú -->
-      <a href="app.html" class="mobile-btn-login">APP Version WEB</a>
     </nav>
     <div class="header-actions">
       <a href="app.html" class="btn-login">
