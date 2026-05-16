@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidad · DON VIGI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-main: #EEF2F8;
+      --surface: #FFFFFF;
+      --primary: #1B3A6B;
+      --primary-light: #2C5FA0;
+      --accent: #D4890A;
+      --text-dark: #0D1F3C;
+      --text-muted: #4A6080;
+      --border: rgba(27, 58, 107, 0.12);
+    }
+
+    body {
+      background: var(--bg-main);
+      color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 4px 15px rgba(27, 58, 107, 0.05);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 16px; font-weight: 800; letter-spacing: 1px;
+      color: var(--primary); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-back {
+      font-size: 14px; font-weight: 700; color: var(--primary-light);
+      text-decoration: none; opacity: .85;
+      transition: all 0.2s;
+    }
+    .nav-back:hover { opacity: 1; color: var(--primary); transform: translateX(-3px); }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 120px 28px 80px;
+    }
+    
+    .card-container {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 40px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(27, 58, 107, 0.05);
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .fecha {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(27, 58, 107, 0.05);
+      border-radius: 100px;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    
+    strong {
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    ul li {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    a { 
+      color: var(--primary-light);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 28px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+    
+    @media (max-width: 600px) {
+      .card-container { padding: 24px; border-radius: 20px; }
+      main { padding: 100px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">
+      👮 DON <span>VIGI</span>
+    </a>
+    <a class="nav-back" href="/">← Volver al inicio</a>
+  </nav>
+
+  <main>
+    <div class="card-container">
+      <h1>Política de Privacidad</h1>
+      <p class="fecha">Última actualización: mayo de 2026</p>
+
+      <section>
+        <h2>1. Información general</h2>
+        <p>
+          DON VIGI (anteriormente Preguntero Policial) es una aplicación educativa táctica diseñada para ayudar a los agentes
+          de la Policía de la Provincia de Santa Fe a prepararse para los concursos de ascenso de manera profesional.
+          Esta política describe cómo tratamos la información de los usuarios de la app móvil
+          (Android) y de la versión web.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Datos que recopilamos</h2>
+        <p>La aplicación <strong>no recopila datos personales</strong> como nombre, dirección, correo electrónico ni número de teléfono.</p>
+        <p>Los únicos datos que se gestionan son:</p>
+        <ul>
+          <li><strong>Código de acceso:</strong> un código alfanumérico único que el usuario obtiene al adquirir la licencia. Se almacena localmente en el dispositivo para mantener la sesión activa.</li>
+          <li><strong>Token de sesión:</strong> un identificador aleatorio generado en el dispositivo al activar el código por primera vez. Se utiliza únicamente para verificar que el acceso corresponde al dispositivo autorizado.</li>
+          <li><strong>Estadísticas de uso anónimas:</strong> cantidad de preguntas respondidas y porcentaje de aciertos, almacenados localmente en el dispositivo (app móvil) o de forma anónima en Firebase (versión web).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. Almacenamiento de datos</h2>
+        <ul>
+          <li><strong>App móvil (Android):</strong> todos los datos se almacenan en la base de datos local del dispositivo (SQLite). Ningún dato personal se envía a servidores externos.</li>
+          <li><strong>Versión web:</strong> el código de acceso y el token de sesión se almacenan en Firebase Realtime Database con el único fin de verificar la validez del acceso. No se asocian a datos personales identificables.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Compartir información con terceros</h2>
+        <p>
+          No vendemos, cedemos ni compartimos información de usuarios con terceros.
+          La infraestructura de base de datos utilizada es Firebase (Google LLC), sujeta a la
+          <a href="https://firebase.google.com/support/privacy" target="_blank">política de privacidad de Firebase</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Permisos de la aplicación</h2>
+        <p>La app móvil no solicita permisos especiales del dispositivo (cámara, micrófono, ubicación, contactos, etc.).</p>
+      </section>
+
+      <section>
+        <h2>6. Menores de edad</h2>
+        <p>
+          La aplicación está dirigida a adultos mayores de 18 años (agentes de policía en actividad).
+          No recopilamos intencionalmente datos de menores de edad.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Cambios en esta política</h2>
+        <p>
+          Podemos actualizar esta política ocasionalmente. Los cambios se publicarán en esta misma
+          página con la fecha de actualización correspondiente.
+        </p>
+      </section>
+
+      <hr class="divider" />
+
+      <section>
+        <h2>Contacto</h2>
+        <p>
+          Para consultas relacionadas con la privacidad, podés contactarnos a través de WhatsApp
+          al número disponible en nuestra plataforma.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 DON VIGI · Todos los derechos reservados
+  </footer>
+
+</body>
+</html>

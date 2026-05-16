@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>DON VIGI - App de estudio y gestion de servicios</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <style>
+    :root {
+      --primary: #1B3A6B;
+      --primary-light: #2C5FA0;
+      --accent: #D4890A;
+      --accent-light: #F2A321;
+      --bg-main: #F8F9FB;
+      --surface: #FFFFFF;
+      --text: #1E293B;
+      --muted: #64748B;
+      --border: #E2E8F0;
+      --green: #10B981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+      background-size: 30px 30px;
+      background-attachment: fixed; /* Efecto Parallax en el fondo */
+    }
+
+    h1, h2, h3, h4, .logo { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* ── SCROLL ANIMATION (REVEAL) ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* ── HEADER ── */
+    header {
+      position: relative; z-index: 1000;
+      padding: 24px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: transparent;
+    }
+    .logo { 
+      font-size: 24px; font-weight: 900; color: var(--primary); 
+      display: flex; align-items: center; gap: 8px; text-decoration: none; 
+      z-index: 10; letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--accent); }
+    
+    .nav-links { display: flex; gap: 36px; align-items: center; background: rgba(255,255,255,0.7); padding: 12px 32px; border-radius: 100px; box-shadow: 0 10px 30px rgba(27,58,107,0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.8); }
+    .nav-links a { font-size: 14px; font-weight: 700; color: var(--muted); text-decoration: none; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+    .nav-links a:hover { color: var(--primary); transform: translateY(-1px); }
+
+    .header-actions { display: flex; align-items: center; gap: 20px; }
+    .btn-login {
+      background: var(--primary); color: white; padding: 12px 28px; border-radius: 100px;
+      font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 10px 20px rgba(27,58,107,0.15); transition: all 0.3s; border: 2px solid transparent; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .btn-login:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(27,58,107,0.25); background: white; color: var(--primary); border-color: var(--primary); }
+    .btn-login svg { fill: currentColor; }
+
+
+    /* ── HERO SECTION ── */
+    .hero {
+      position: relative;
+      max-width: 1400px; margin: 0 auto;
+      padding: 60px 80px 40px; 
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: auto;
+    }
+    
+    .hero-left {
+      flex: 1; max-width: 650px; z-index: 10; position: relative;
+    }
+    .hero-subtitle { 
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); 
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block;
+      background: rgba(212,137,10,0.1); padding: 8px 20px; border-radius: 100px; border: 1px solid rgba(212,137,10,0.2);
+    }
+    .hero-title { font-size: 72px; font-weight: 900; color: var(--text); line-height: 1.05; margin-bottom: 24px; letter-spacing: -2.5px; text-wrap: balance;}
+    .hero-title span { background: linear-gradient(135deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .hero-desc { font-size: 18px; color: var(--muted); margin-bottom: 40px; font-weight: 400; line-height: 1.7; max-width: 550px; text-wrap: pretty;}
+
+    /* ── HERO RIGHT (GLOW & CAROUSEL) ── */
+    .hero-right {
+      flex: 1; position: relative; display: flex; justify-content: flex-end; align-items: center;
+      height: 450px;
+    }
+    
+    .glow-bg {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(27,58,107,0.5) 0%, rgba(212,137,10,0.1) 50%, transparent 70%);
+      filter: blur(60px);
+      z-index: 1;
+      animation: pulseGlow 5s infinite alternate ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0% { transform: translateY(-50%) scale(0.9); opacity: 0.7; }
+      100% { transform: translateY(-50%) scale(1.1); opacity: 1; }
+    }
+    
+    .pc-mockup {
+      position: relative; z-index: 10;
+      width: 580px; height: 350px;
+      background: #000; border-radius: 12px 12px 0 0;
+      box-shadow: -30px 40px 80px rgba(0,0,0,0.4), inset 0 0 0 10px #222;
+      margin-right: 20px; 
+      animation: floatPhone 6s ease-in-out infinite;
+      display: flex; flex-direction: column;
+    }
+    .pc-mockup::after {
+      content: ''; position: absolute; bottom: -15px; left: -5%; width: 110%; height: 15px;
+      background: linear-gradient(to bottom, #e2e8f0, #94a3b8); border-radius: 2px 2px 10px 10px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4); z-index: -1;
+    }
+    .pc-screen { position: relative; width: 100%; height: 100%; border-radius: 4px; overflow: hidden; background: #0E1F3A; }
+    .pc-screen iframe { width: 100%; height: 100%; border: none; object-fit: cover; }
+    
+    @keyframes floatPhone {
+      0% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-15px) rotate(-0.5deg); }
+      100% { transform: translateY(0) rotate(-1deg); }
+    }
+
+    /* Floating Icons over the glow */
+    .float-icon {
+      position: absolute; z-index: 11;
+      width: 70px; height: 70px; background: rgba(255,255,255,0.9); border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15); backdrop-filter: blur(10px);
+      animation: floatIconAnim 5s infinite ease-in-out alternate; border: 1px solid rgba(255,255,255,0.6);
+      overflow: hidden;
+    }
+    .float-icon img {
+      width: 100%; height: 100%; object-fit: contain; padding: 12px;
+    }
+    .fi-1 { top: 20px; left: 20px; animation-delay: 0s; transform: rotate(-10deg); }
+    .fi-2 { bottom: 80px; left: -20px; animation-delay: -1.5s; transform: rotate(15deg); }
+    .fi-3 { top: 60px; right: -20px; animation-delay: -3s; transform: rotate(5deg); }
+    .fi-4 { bottom: 120px; right: -40px; animation-delay: -2s; transform: rotate(-10deg); }
+    @keyframes floatIconAnim { 0% { transform: translateY(0px) rotate(auto); } 100% { transform: translateY(-30px) rotate(auto); } }
+
+    /* ── OVERLAPPING CARDS (ABAJO DEL HERO) ── */
+    .cards-wrapper {
+      position: relative; max-width: 1300px; margin: 40px auto 100px; padding: 0 80px;
+      z-index: 20;
+    }
+    .cards-container {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+    }
+    .info-card {
+      background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border-radius: 24px; padding: 35px 30px;
+      display: flex; flex-direction: column; gap: 16px;
+      box-shadow: 0 20px 50px rgba(27,58,107,0.06);
+      border: 1px solid rgba(255,255,255,1);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
+    }
+    .info-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--primary), var(--accent)); transition: width 0.3s; opacity: 0; }
+    .info-card:hover { transform: translateY(-15px); box-shadow: 0 35px 65px rgba(27,58,107,0.12); background: #fff;}
+    .info-card:hover::before { opacity: 1; }
+    
+    .ic-icon {
+      width: 60px; height: 60px; background: rgba(27,58,107,0.05); border-radius: 18px;
+      display: flex; align-items: center; justify-content: center; font-size: 28px;
+      transition: transform 0.3s; color: var(--primary);
+    }
+    .info-card:hover .ic-icon { transform: scale(1.1) rotate(-5deg); }
+    .ic-text h4 { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.5px;}
+    .ic-text p { font-size: 15px; color: var(--muted); font-weight: 400; line-height: 1.6; }
+
+    /* ── SECCIONES GENERALES ── */
+    .section-padding { padding: 80px 80px; max-width: 1300px; margin: 0 auto; position: relative; z-index: 10;}
+    .section-subtitle { display: block; font-size: 14px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 12px; font-family: 'Inter', sans-serif;}
+    .section-title { font-size: 44px; font-weight: 900; color: var(--text); margin-bottom: 50px; letter-spacing: -1.5px; line-height: 1.1;}
+
+    /* ── QUIÉNES SOMOS ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-img { position: relative; }
+    .about-img-file { width: 100%; border-radius: 35px; box-shadow: 0 40px 80px rgba(27,58,107,0.15); display: block; transition: transform 0.5s;}
+    .about-img:hover .about-img-file { transform: scale(1.02); }
+    .about-text p { color: var(--muted); margin-bottom: 24px; font-size: 17px; line-height: 1.8; }
+    .check-list { list-style: none; margin-top: 35px; }
+    .check-list li { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; font-weight: 600; color: var(--text); font-size: 16px;}
+    .check-list li::before { content: '✓'; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: rgba(16, 185, 129, 0.15); color: var(--green); border-radius: 50%; font-size: 15px; font-weight: 900; flex-shrink: 0;}
+
+    /* ── PRECIO Y COMPRA ── */
+    .price-wrap { display: flex; align-items: center; justify-content: space-between; gap: 60px; background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); padding: 70px; border-radius: 40px; box-shadow: 0 30px 60px rgba(27,58,107,0.05); border: 1px solid rgba(255,255,255,0.8); }
+    .price-info { flex: 1; max-width: 500px; }
+    .price-info h2 { font-size: 42px; font-weight: 900; color: var(--text); margin-bottom: 24px; line-height: 1.1; letter-spacing: -1.5px;}
+    .price-info p { font-size: 17px; color: var(--muted); margin-bottom: 0; line-height: 1.7;}
+    .price-box {
+      flex: 0 0 400px; background: linear-gradient(145deg, var(--primary), #112445);
+      padding: 60px 50px; border-radius: 35px; color: white; text-align: center;
+      box-shadow: 0 40px 80px rgba(27,58,107,0.3); position: relative; overflow: hidden;
+    }
+    .price-box::before { content: ''; position: absolute; top: -80px; right: -80px; width: 250px; height: 250px; background: rgba(255,255,255,0.03); border-radius: 50%; }
+    .price-box .amount { font-size: 80px; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 10px; letter-spacing: -3px; font-family: 'Plus Jakarta Sans', sans-serif;}
+    .price-box .period { font-size: 16px; font-weight: 600; opacity: 0.8; margin-bottom: 40px; letter-spacing: 2px; text-transform: uppercase;}
+    .btn-buy {
+      display: inline-block; width: 100%; background: white; color: var(--text); padding: 20px; border-radius: 100px;
+      font-size: 18px; font-weight: 800; text-decoration: none; transition: all 0.3s; font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .btn-buy:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); color: var(--primary); }
+
+    /* ── RESET CODE & CONTACTO ── */
+    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
+    
+    .action-box { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); padding: 60px 50px; border-radius: 35px; box-shadow: 0 20px 50px rgba(27,58,107,0.04); border: 1px solid rgba(255,255,255,0.9); }
+    .action-box h3 { font-size: 28px; font-weight: 900; margin-bottom: 20px; color: var(--text); letter-spacing: -1px;}
+    .action-box p { color: var(--muted); font-size: 16px; margin-bottom: 35px; line-height: 1.7;}
+    
+    .reset-input { width: 100%; padding: 20px; border: 2px solid var(--border); border-radius: 20px; font-size: 22px; font-weight: 800; text-align: center; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 24px; outline: none; background: rgba(255,255,255,0.5); transition: all 0.3s; font-family: monospace;}
+    .reset-input:focus { border-color: var(--primary); background: white; box-shadow: 0 10px 20px rgba(27,58,107,0.05);}
+    .btn-action { width: 100%; background: var(--primary); color: white; padding: 20px; border-radius: 100px; font-size: 18px; font-weight: 800; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.3s; }
+    .btn-action:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(27,58,107,0.2);}
+    
+    /* Formulario Contacto */
+    .form-group { margin-bottom: 20px; }
+    .form-input { width: 100%; padding: 18px 20px; border: 2px solid var(--border); border-radius: 16px; font-size: 16px; font-weight: 500; outline: none; background: rgba(255,255,255,0.5); font-family: 'Inter', sans-serif; transition: all 0.3s;}
+    .form-input:focus { border-color: var(--primary); background: white; box-shadow: 0 5px 15px rgba(27,58,107,0.05);}
+
+    .reset-msg { margin-top: 20px; font-weight: 700; font-size: 15px; display: none; text-align: center; padding: 16px; border-radius: 12px; }
+    .reset-msg.success { color: #065F46; background: #D1FAE5; }
+    .reset-msg.error { color: #991B1B; background: #FEE2E2; }
+
+    /* ── FOOTER ── */
+    footer { padding: 60px 80px; text-align: center; color: var(--muted); font-weight: 500; font-size: 15px; border-top: 1px solid var(--border); margin-top: 60px;}
+    footer a { color: var(--text); text-decoration: none; margin: 0 20px; font-weight: 700; transition: color 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 13px;}
+    footer a:hover { color: var(--primary); }
+
+    /* ── BOTÓN FLOTANTE WA (Derecha Abajo) con ícono oficial SVG ── */
+    .fab-wa {
+      position: fixed; bottom: 35px; right: 35px; width: 70px; height: 70px;
+      background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 15px 35px rgba(37,211,102,0.4); z-index: 1000; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fab-wa:hover { transform: scale(1.1) rotate(5deg); }
+    .fab-wa svg { width: 38px; height: 38px; fill: white; }
+
+    /* RESPONSIVE MÓVIL */
+    .mobile-menu-btn { display: none; background: none; border: none; font-size: 28px; color: var(--primary); cursor: pointer; }
+    
+    @media (max-width: 1024px) {
+      header { padding: 20px 30px; }
+      .nav-links { 
+        display: none; flex-direction: column; position: absolute; top: 75px; left: 20px; right: 20px;
+        background: rgba(255,255,255,0.95); backdrop-filter: blur(25px); border-radius: 20px;
+        padding: 30px 20px; box-shadow: 0 20px 50px rgba(27,58,107,0.15); border: 1px solid rgba(255,255,255,1);
+        gap: 24px; z-index: 1000; text-align: center;
+      }
+      .nav-links.active { display: flex !important; }
+      .header-actions .btn-login { display: none; }
+      .mobile-menu-btn { display: block; }
+      
+      .hero { flex-direction: column; padding: 40px 30px 80px; text-align: center; }
+      .hero-left { margin-bottom: 60px; display: flex; flex-direction: column; align-items: center; }
+      .hero-title { font-size: 44px; text-wrap: balance; }
+      .hero-desc { font-size: 16px; }
+      
+      .hero-right { width: 100%; justify-content: center; height: auto; padding-bottom: 20px; }
+      .glow-bg { right: 50%; transform: translateX(50%) translateY(-50%); width: 300px; height: 300px; filter: blur(40px);}
+      
+      .pc-mockup { margin: 0 auto; width: 90vw; height: 55vw; border-radius: 8px 8px 0 0; box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 6px #222;}
+      .pc-mockup::after { height: 10px; bottom: -10px; left: -2%; width: 104%; border-radius: 2px 2px 6px 6px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+      
+      .float-icon { width: 50px; height: 50px; border-radius: 12px; }
+      .float-icon img { padding: 8px; }
+      .fi-1 { top: -10px; left: 0px; }
+      .fi-2 { bottom: 20px; left: -10px; }
+      .fi-3 { top: 20px; right: -10px; }
+      .fi-4 { bottom: 40px; right: -10px; }
+      
+      .cards-wrapper { margin: 20px auto 60px; padding: 0 20px; }
+      .cards-container { grid-template-columns: 1fr; gap: 20px; }
+      .social-bar { display: none; }
+      
+      .section-padding { padding: 60px 30px; }
+      .about-grid { grid-template-columns: 1fr; gap: 50px; text-align: center;}
+      .check-list li { justify-content: center; }
+      
+      .price-wrap { flex-direction: column; text-align: center; padding: 40px 30px; }
+      .price-box { flex: auto; width: 100%; padding: 40px 30px; }
+      
+      .bottom-grid { grid-template-columns: 1fr; gap: 40px; }
+      .action-box { padding: 40px 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="#" class="logo">👮 DON <span>VIGI</span></a>
+    <nav class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#quienes-somos">Nosotros</a>
+      <a href="#precio">Comprar</a>
+      <a href="#contacto">Contacto</a>
+      <a href="privacidad.html">Privacidad</a>
+    </nav>
+    <div class="header-actions">
+      <a href="app.html" class="btn-login">
+        APP Version WEB
+      </a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
+    </div>
+  </header>
+
+
+  <!-- HERO SECTION -->
+  <section id="inicio" class="hero reveal">
+    <div class="hero-left">
+      <span class="hero-subtitle">Diseñada para el personal Policial</span>
+      <h1 class="hero-title">Estudiá y organizá tus <span>guardias y servicios.</span></h1>
+      <p class="hero-desc">Una ayuda diseñada por y para personal policial. Controlá tus guardias y servicios y preparate para los concursos de ascenso con la app más completo. (Aplicación NO Oficial).</p>
+    </div>
+
+    <div class="hero-right reveal delay-1">
+      <!-- Glow Profesional (Reemplazo del blob anterior) -->
+      <div class="glow-bg"></div>
+      
+      <!-- Mockup PC Animado -->
+      <div class="pc-mockup">
+        <div class="pc-screen">
+          <iframe src="assets/video/video.html" scrolling="no" allow="autoplay" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Iconos flotantes decorativos -->
+      <div class="float-icon fi-1"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_T7o1oT9av6WEwV6djkn6s5w_35El7pBU4A&s" alt="Icon 1"></div>
+      <div class="float-icon fi-2"><img src="https://static.vecteezy.com/system/resources/thumbnails/000/356/049/small/Education__28105_29.jpg" alt="Icon 2" style="padding:0; object-fit: cover;"></div>
+      <div class="float-icon fi-3"><img src="https://cdn-icons-png.flaticon.com/512/1022/1022331.png" alt="Icon 3"></div>
+      <div class="float-icon fi-4"><img src="https://cdn-icons-png.flaticon.com/512/2370/2370279.png" alt="Icon 4"></div>
+    </div>
+  </section>
+
+  <!-- CARDS SUPERPUESTAS (Ahora desplazadas hacia abajo) -->
+  <div class="cards-wrapper">
+    <div class="cards-container">
+      <div class="info-card reveal delay-1">
+        <div class="ic-icon">📝</div>
+        <div class="ic-text">
+          <h4>+1000 Preguntas</h4>
+          <p>Divididas por jerarquías para estudiar exacto lo que necesitás.</p>
+        </div>
+      </div>
+      <div class="info-card reveal delay-2">
+        <div class="ic-icon" style="color: var(--accent); background: rgba(212,137,10,0.1);">💻</div>
+        <div class="ic-text">
+          <h4>Versión Web</h4>
+          <p>Ingresá desde cualquier compu o iPhone/Android para practicar más cómodo.</p>
+        </div>
+      </div>
+      <div class="info-card reveal delay-3">
+        <div class="ic-icon">📱</div>
+        <div class="ic-text">
+          <h4>App Android</h4>
+          <p>Estudia y llevá el control de tus guardias, y servicios en tu celular.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN QUIÉNES SOMOS -->
+  <section id="quienes-somos" class="about-section section-padding reveal">
+    <div class="about-grid">
+      <div class="about-img reveal delay-1">
+        <img src="assets/images/nuestra_mision.png" alt="Nuestra Misión" class="about-img-file">
+      </div>
+      <div class="about-text reveal delay-2">
+        <span class="section-subtitle">Nuestra Misión</span>
+        <h2 class="section-title" style="margin-bottom:20px;">Hecho por y para profesionales</h2>
+        <p>Entendemos que el tiempo es oro y que la preparación para los concursos de ascenso, sumado a las responsabilidades diarias, requiere herramientas eficientes.</p>
+        <p>DON VIGI nace de la necesidad real de organizar y de llevar un control estricto de las guardias y servicios, combinándolo en un solo lugar.</p>
+        <ul class="check-list">
+          <li>Plataforma independiente y enfocada en el usuario.</li>
+          <li>Actualizaciones constantes del material de estudio.</li>
+          <li>Soporte técnico directo ante cualquier duda.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRECIO SECTION -->
+  <section id="precio" class="buy-section section-padding reveal">
+    <div class="price-wrap">
+      <div class="price-info reveal delay-1">
+        <span class="section-subtitle">Adquirí tu licencia</span>
+        <h2>Todo tu servicio en un solo lugar</h2>
+        <p>Con un único pago obtenés acceso, si elegiste version web solo podras tener acceso a las preguntas y en la version app tendras todo el servicio en un solo lugar.</p>
+      </div>
+      <div class="price-box reveal delay-2">
+        <div class="amount">$3000</div>
+        <div class="period">Pago Único</div>
+        <a href="https://wa.me/5493417190648?text=Hola%2C%20quiero%20comprar%20mi%20acceso%20a%20DON%20VIGI" target="_blank" class="btn-buy">Comprar Acceso por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID: RESET CODE & CONTACTO -->
+  <section id="contacto" class="section-padding reveal">
+    <span class="section-subtitle" style="text-align:center;">Gestión y Soporte</span>
+    <h2 class="section-title" style="text-align:center;">¿Necesitás ayuda?</h2>
+    
+    <div class="bottom-grid">
+      <!-- Reset Box -->
+      <div class="action-box reveal delay-1" id="restablecer">
+        <h3>Liberar Código Web</h3>
+        <p>¿Iniciaste sesión y ahora no te reconose el codigo? Ingresalo aquí para restablecerlo asi podes volver a ingresar sin problemas.</p>
+        
+        <input type="text" id="reset-input" class="reset-input" placeholder="INGRESA TU CÓDIGO" maxlength="8" autocomplete="off" spellcheck="false">
+        <button class="btn-action" id="btn-reset" onclick="restablecerCodigo()">Restablecer Mi Código</button>
+        <div id="reset-msg" class="reset-msg"></div>
+      </div>
+      
+      <!-- Contact Form Box -->
+      <div class="action-box reveal delay-2">
+        <h3>Formulario de Contacto</h3>
+        <p>Escribinos directo a nuestro soporte y te responderemos a la brevedad posible a través de WhatsApp.</p>
+        
+        <form onsubmit="enviarContacto(event)">
+          <div class="form-group">
+            <input type="text" id="c-name" class="form-input" placeholder="Tu Nombre / Jerarquía" required>
+          </div>
+          <div class="form-group">
+            <textarea id="c-msg" class="form-input" rows="3" placeholder="¿En qué te podemos ayudar?" required></textarea>
+          </div>
+          <button type="submit" class="btn-action" style="background: var(--text);">Enviar Mensaje a Soporte</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="reveal">
+    <div style="margin-bottom: 24px;">
+      <a href="#inicio">Inicio</a>
+      <a href="#quienes-somos">Nosotros</a>
+      <a href="privacidad.html">Privacidad</a>
+    </div>
+    <p>© 2026 DON VIGI · Herramienta Policial No Oficial. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- FAB WA (Abajo Derecha) -->
+  <a href="https://wa.me/5493417190648?text=Necesito%20ayuda%2C%20contactame%20con%20el%20Soporte" target="_blank" class="fab-wa" title="Soporte Directo">
+    <svg viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.4 0 12.031c0 2.63.829 5.088 2.298 7.15L.306 24l5.06-1.99a11.967 11.967 0 006.665 2.012c6.633 0 12.031-5.401 12.031-12.032C24.062 5.4 18.664 0 12.031 0zm0 21.996a9.92 9.92 0 01-5.074-1.39l-.364-.216-3.766 1.482 1.006-3.668-.237-.377a9.945 9.945 0 01-1.52-5.28c0-5.495 4.475-9.969 9.97-9.969 5.494 0 9.968 4.474 9.968 9.969 0 5.496-4.474 9.969-9.968 9.969zm5.485-7.464c-.301-.151-1.78-.88-2.057-.98-.276-.1-.478-.151-.679.15-.202.302-.778.98-.954 1.18-.176.202-.351.227-.653.076-.301-.15-1.272-.469-2.422-1.495-.895-.799-1.5-1.785-1.676-2.086-.176-.301-.019-.464.131-.615.136-.135.302-.351.453-.527.151-.176.201-.302.302-.503.1-.202.05-.378-.025-.528-.076-.151-.679-1.637-.929-2.242-.244-.59-.492-.51-.679-.52-.176-.008-.377-.01-.578-.01-.202 0-.528.076-.804.378-.276.302-1.055 1.03-1.055 2.513 0 1.483 1.08 2.917 1.231 3.118.151.202 2.125 3.245 5.148 4.549.719.31 1.28.496 1.718.635.723.23 1.381.198 1.899.12.579-.086 1.78-.728 2.03-1.433.252-.705.252-1.309.176-1.434-.075-.126-.276-.202-.578-.352z"/></svg>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Reveal Animations (Intersection Observer for perfect trigger on scroll)
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Optional: observer.unobserve(entry.target); // If you only want it to animate once
+          }
+        });
+      }, {
+        threshold: 0.1, // Trigger when 10% visible
+        rootMargin: "0px 0px -50px 0px"
+      });
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+    });
+
+
+
+    // Contact Form to WhatsApp
+    function enviarContacto(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('c-name').value;
+      const msg = document.getElementById('c-msg').value;
+      const url = `https://wa.me/5493417190648?text=Hola%2C%20soy%20${encodeURIComponent(nombre)}.%20${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    // Configuración Firebase para restablecer código
+    firebase.initializeApp({
+      apiKey: "AIzaSyA5dwOVjY8gCwi1fMGWUdx-7sBRq0jDbgg",
+      authDomain: "microtrafico-pdi-d304c.firebaseapp.com",
+      databaseURL: "https://microtrafico-pdi-d304c-default-rtdb.firebaseio.com/",
+      projectId: "microtrafico-pdi-d304c",
+      storageBucket: "microtrafico-pdi-d304c.firebasestorage.app",
+      messagingSenderId: "631537020389",
+      appId: "1:631537020389:web:66f7edb29067a52cf2930c"
+    });
+    const fbDb = firebase.database();
+
+    async function restablecerCodigo() {
+      const input = document.getElementById('reset-input');
+      const codigo = input.value.trim().toUpperCase();
+      const btn = document.getElementById('btn-reset');
+      const msgEl = document.getElementById('reset-msg');
+
+      if(codigo.length < 6) {
+        msgEl.className = 'reset-msg error';
+        msgEl.textContent = 'Ingresá un código válido.';
+        msgEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Procesando...';
+      msgEl.style.display = 'none';
+
+      try {
+        const ref = fbDb.ref(`web_codigos/${codigo}`);
+        const snap = await ref.get();
+        
+        if (!snap.exists()) {
+          msgEl.className = 'reset-msg error';
+          msgEl.textContent = 'El código ingresado no existe en la base de datos.';
+          msgEl.style.display = 'block';
+        } else {
+          await ref.update({ usado: false, session_token: null });
+          localStorage.removeItem('ppolicial_acceso');
+          localStorage.removeItem('ppolicial_data');
+
+          msgEl.className = 'reset-msg success';
+          msgEl.textContent = '¡Código liberado con éxito! Ya podés iniciar sesión en otro dispositivo.';
+          msgEl.style.display = 'block';
+          input.value = '';
+        }
+      } catch (error) {
+        msgEl.className = 'reset-msg error';
+        msgEl.textContent = 'Error de conexión. Intentalo de nuevo.';
+        msgEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Restablecer Mi Código';
+      }
+    }
+
+    // Cerrar menú móvil al hacer click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
