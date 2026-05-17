@@ -234,6 +234,9 @@
     .reset-msg.success { color: #065F46; background: #D1FAE5; }
     .reset-msg.error { color: #991B1B; background: #FEE2E2; }
 
+    .play-badge { display: inline-block; transition: all 0.3s ease; }
+    .play-badge:hover { transform: translateY(-5px) scale(1.05); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
+
     /* ── FOOTER ── */
     footer { padding: 60px 80px; text-align: center; color: var(--muted); font-weight: 500; font-size: 15px; border-top: 1px solid var(--border); margin-top: 60px;}
     footer a { color: var(--text); text-decoration: none; margin: 0 20px; font-weight: 700; transition: color 0.2s; text-transform: uppercase; letter-spacing: 1px; font-size: 13px;}
@@ -308,6 +311,7 @@
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#quienes-somos">Nosotros</a>
       <a href="#precio">Comprar</a>
+      <a href="#descargar">Descarga</a>
       <a href="#contacto">Contacto</a>
       <a href="privacidad.html">Privacidad</a>
     </nav>
@@ -438,6 +442,22 @@
     </div>
   </section>
 
+  <!-- DESCARGAR SECTION -->
+  <section id="descargar" class="section-padding reveal">
+    <div class="action-box" style="text-align: center; max-width: 800px; margin: 0 auto; padding: 60px 40px; display: flex; flex-direction: column; align-items: center;">
+      <span class="section-subtitle">Para usuarios con android</span>
+      <h2 class="section-title" style="margin-bottom: 20px; font-size: 36px;">Descargá la App</h2>
+      <p style="font-size: 17px; max-width: 600px; margin: 0 auto 40px; color: var(--muted); line-height: 1.6;">
+        Estamos en las etapas finales. Muy pronto vas a poder descargar la aplicación de DON VIGI directamente desde la Google Play Store.
+      </p>
+      
+      <a href="#descargar" class="play-badge" onclick="event.preventDefault(); alert('¡Próximamente! Estamos finalizando la etapa de testing. Pronto te dejaremos el enlace acá.');">
+        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es_badge_web_generic.png" alt="Disponible en Google Play" style="height: 70px;">
+      </a>
+      <span style="display: block; margin-top: 15px; font-size: 14px; font-weight: 700; color: var(--accent);">¡Etapa de Testing!</span>
+    </div>
+  </section>
+
   <!-- GRID: RESET CODE & CONTACTO -->
   <section id="contacto" class="section-padding reveal">
     <span class="section-subtitle" style="text-align:center;">Gestión y Soporte</span>
@@ -478,6 +498,7 @@
       <a href="#inicio">Inicio</a>
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#quienes-somos">Nosotros</a>
+      <a href="#descargar">Descarga</a>
       <a href="privacidad.html">Privacidad</a>
     </div>
     <p>© 2026 DON VIGI · Herramienta Policial No Oficial. Todos los derechos reservados.</p>
