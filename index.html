@@ -298,7 +298,83 @@
       
       .bottom-grid { grid-template-columns: 1fr; gap: 40px; }
       .action-box { padding: 40px 30px; }
+      
+      .stats-section { padding: 0 20px; margin-bottom: 60px; }
+      .stats-container { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px; }
+      .stat-box:not(:last-child)::after {
+        right: 50%; top: auto; bottom: -20px; transform: translateX(50%);
+        height: 2px; width: 60%;
+      }
     }
+
+    /* ── ESTADÍSTICAS PREMIUM ── */
+    .stats-section {
+      max-width: 1300px; margin: 0 auto 80px; padding: 0 80px;
+      position: relative; z-index: 20;
+    }
+    .stats-container {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+      background: linear-gradient(135deg, rgba(27,58,107,0.9), rgba(17,36,69,0.95));
+      backdrop-filter: blur(20px);
+      border-radius: 35px; padding: 50px 40px; color: white;
+      box-shadow: 0 40px 80px rgba(27,58,107,0.25), inset 0 2px 2px rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative; overflow: hidden;
+    }
+    
+    /* Efecto de luz giratoria en el fondo */
+    .stats-container::before {
+      content: '';
+      position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle at center, rgba(212,137,10,0.15) 0%, transparent 60%);
+      animation: rotateGlow 15s linear infinite;
+      z-index: 0; pointer-events: none;
+    }
+    @keyframes rotateGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .stat-box {
+      text-align: center; position: relative; z-index: 1;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stat-box:hover {
+      transform: translateY(-12px);
+    }
+    
+    .stat-box:not(:last-child)::after {
+      content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%);
+      height: 70%; width: 2px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15), transparent);
+    }
+    
+    .stat-icon { 
+      font-size: 38px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+      width: 75px; height: 75px; border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 10px 20px rgba(0,0,0,0.2);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stat-box:hover .stat-icon {
+      background: var(--accent);
+      box-shadow: 0 15px 35px rgba(212,137,10,0.5);
+      transform: scale(1.15) rotate(8deg);
+      border-radius: 20px;
+    }
+    
+    .stat-number { 
+      font-size: 56px; font-weight: 900; font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #FFFFFF, #CBD5E1);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1; margin-bottom: 12px; letter-spacing: -2px;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    }
+    
+    .stat-label { 
+      font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; 
+      color: var(--accent-light); opacity: 0.95; 
+    }
+
   </style>
 </head>
 <body>
@@ -374,6 +450,27 @@
       </div>
     </div>
   </div>
+
+  <!-- ESTADÍSTICAS -->
+  <section class="stats-section reveal" id="stats-section">
+    <div class="stats-container">
+      <div class="stat-box">
+        <div class="stat-icon">📱</div>
+        <div class="stat-number" id="count-app">0</div>
+        <div class="stat-label">Usuarios Android</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">💻</div>
+        <div class="stat-number" id="count-web">0</div>
+        <div class="stat-label">Usuarios Web</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">👁️</div>
+        <div class="stat-number" id="count-visits">0</div>
+        <div class="stat-label">Visitas Totales</div>
+      </div>
+    </div>
+  </section>
 
   <!-- SECCIÓN QUIÉNES SOMOS -->
   <section id="quienes-somos" class="about-section section-padding reveal">
@@ -603,6 +700,124 @@
       link.addEventListener('click', () => {
         document.querySelector('.nav-links').classList.remove('active');
       });
+    });
+
+    let isStatsVisible = false;
+    let appDataFetched = false;
+    let webDataFetched = false;
+    let visitsDataFetched = false;
+
+    // Observador exclusivo para la sección de estadísticas
+    document.addEventListener("DOMContentLoaded", function() {
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            isStatsVisible = true;
+            // Si ya se habían descargado los datos, los animamos ahora
+            if (appDataFetched) tryAnimate('count-app');
+            if (webDataFetched) tryAnimate('count-web');
+            if (visitsDataFetched) tryAnimate('count-visits');
+            statsObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      
+      const statsSec = document.getElementById('stats-section');
+      if (statsSec) statsObserver.observe(statsSec);
+    });
+
+    function tryAnimate(id) {
+      const el = document.getElementById(id);
+      if (isStatsVisible && !el.dataset.animated && el.dataset.targetValue !== undefined) {
+        el.dataset.animated = 'true';
+        animarNumero(id, parseFloat(el.dataset.targetValue));
+      }
+    }
+
+    // Lógica para obtener las estadísticas del Excel (Usando JSONP para evitar bloqueos CORS)
+    window.procesarEstadisticasExcel = function(data) {
+      try {
+        let appCount = 0;
+        let webCount = 0;
+        
+        const rows = data.table.rows;
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          if (row.c && row.c[2] && row.c[2].v) {
+            const version = row.c[2].v.toString().trim();
+            if (version === 'App') appCount++;
+            else if (version.toLowerCase().includes('web')) webCount++;
+          }
+        }
+        
+        document.getElementById('count-app').dataset.targetValue = appCount;
+        document.getElementById('count-web').dataset.targetValue = webCount;
+        appDataFetched = true;
+        webDataFetched = true;
+        tryAnimate('count-app');
+        tryAnimate('count-web');
+      } catch (error) {
+        console.error('Error procesando estadísticas:', error);
+      }
+    };
+
+    function obtenerEstadisticasExcel() {
+      const script = document.createElement('script');
+      script.src = 'https://docs.google.com/spreadsheets/d/1KB1Glo3hzLaZrOXFyWg34oPZRpGVHM7Q4pP7LJKW5yI/gviz/tq?tqx=out:json;responseHandler:procesarEstadisticasExcel&gid=0';
+      document.body.appendChild(script);
+    }
+
+    // Lógica para el contador de visitas con Firebase
+    function registrarVisita() {
+      const visitasRef = fbDb.ref('estadisticas/visitas');
+      
+      if (!sessionStorage.getItem('visita_registrada')) {
+        visitasRef.transaction((visitasActuales) => {
+          return (visitasActuales || 0) + 1;
+        }, (error, committed, snapshot) => {
+          if (error) {
+            console.error('Error en transacción de visitas:', error);
+          } else if (committed) {
+            const totalVisitas = snapshot.val();
+            document.getElementById('count-visits').dataset.targetValue = totalVisitas;
+            visitsDataFetched = true;
+            tryAnimate('count-visits');
+            sessionStorage.setItem('visita_registrada', 'true');
+          }
+        });
+      } else {
+        visitasRef.once('value').then((snapshot) => {
+          const totalVisitas = snapshot.val() || 0;
+          document.getElementById('count-visits').dataset.targetValue = totalVisitas;
+          visitsDataFetched = true;
+          tryAnimate('count-visits');
+        });
+      }
+    }
+
+    // Animación de los números (lenta y fluida)
+    function animarNumero(id, finalValue) {
+      const element = document.getElementById(id);
+      let currentValue = 0;
+      const duration = 1000; // 1 segundo de duración total (más rápido)
+      const steps = duration / 30; // cantidad de repeticiones del intervalo
+      const increment = finalValue / steps; // incremento con decimales
+      
+      const timer = setInterval(() => {
+        currentValue += increment;
+        if (currentValue >= finalValue) {
+          currentValue = finalValue;
+          clearInterval(timer);
+        }
+        // Mostramos el número redondeado sin decimales
+        element.textContent = Math.floor(currentValue);
+      }, 30);
+    }
+
+    // Iniciar funciones al cargar
+    document.addEventListener("DOMContentLoaded", () => {
+      obtenerEstadisticasExcel();
+      registrarVisita();
     });
   </script>
 </body>
