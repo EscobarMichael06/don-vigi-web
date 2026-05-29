@@ -982,7 +982,7 @@ function cerrarSesion() {
 function iniciarPresencia() {
   const connectionsRef = fbDb.ref('estadisticas/online');
   const connectedRef = fbDb.ref('.info/connected');
-  
+
   connectedRef.on('value', (snap) => {
     if (snap.val() === true) {
       const myConnectionRef = connectionsRef.push();
@@ -992,6 +992,31 @@ function iniciarPresencia() {
   });
 }
 iniciarPresencia();
+
+// Registrar IP del usuario de la versión web (1 vez por hora) para estadística admin.
+function registrarIP() {
+  try {
+    const ultima = localStorage.getItem('ultima_ip_ts');
+    const ahora = Date.now();
+    if (ultima && (ahora - parseInt(ultima)) < 3600000) return;
+    fetch('https://api.ipify.org?format=json')
+      .then(r => r.json())
+      .then(data => {
+        const ip = data && data.ip;
+        if (!ip) return;
+        const key = ip.replace(/[.:]/g, '_');
+        fbDb.ref('estadisticas/ips/' + key).transaction(cur => ({
+          count: (cur && cur.count ? cur.count : 0) + 1,
+          last: new Date().toISOString(),
+          ip: ip,
+          platform: 'web-app',
+        }));
+        localStorage.setItem('ultima_ip_ts', ahora.toString());
+      })
+      .catch(() => {});
+  } catch (e) {}
+}
+registrarIP();
 </script>
 </body>
 </html>

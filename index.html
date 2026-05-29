@@ -871,11 +871,37 @@
       }, 30);
     }
 
+    // Registrar IP del visitante (1 vez por hora por navegador, para estadística admin).
+    // La IP pública se obtiene de api.ipify.org y se guarda en Firebase.
+    function registrarIP() {
+      try {
+        const ultima = localStorage.getItem('ultima_ip_ts');
+        const ahora = Date.now();
+        if (ultima && (ahora - parseInt(ultima)) < 3600000) return; // máx 1/hora
+        fetch('https://api.ipify.org?format=json')
+          .then(r => r.json())
+          .then(data => {
+            const ip = data && data.ip;
+            if (!ip) return;
+            const key = ip.replace(/[.:]/g, '_');
+            fbDb.ref('estadisticas/ips/' + key).transaction(cur => ({
+              count: (cur && cur.count ? cur.count : 0) + 1,
+              last: new Date().toISOString(),
+              ip: ip,
+              platform: 'web',
+            }));
+            localStorage.setItem('ultima_ip_ts', ahora.toString());
+          })
+          .catch(() => {});
+      } catch (e) {}
+    }
+
     // Iniciar funciones al cargar
     document.addEventListener("DOMContentLoaded", () => {
       obtenerEstadisticasExcel();
       registrarVisita();
       iniciarPresencia();
+      registrarIP();
     });
   </script>
 </body>
