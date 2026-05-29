@@ -384,6 +384,29 @@
       .stat-label { font-size: 13px; letter-spacing: 1.5px; }
     }
 
+    /* INDICADOR USUARIOS ONLINE */
+    .online-indicator {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
+      padding: 8px 16px; border-radius: 100px;
+      font-size: 13px; font-weight: 700; color: var(--text);
+      box-shadow: 0 5px 15px rgba(27,58,107,0.05); border: 1px solid rgba(255,255,255,0.9);
+      margin-right: 15px; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .online-indicator .dot {
+      width: 8px; height: 8px; background: #10B981; border-radius: 50%;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+      animation: blinkOnline 1.5s infinite alternate;
+    }
+    @keyframes blinkOnline {
+      from { opacity: 1; box-shadow: 0 0 12px rgba(16, 185, 129, 1); }
+      to { opacity: 0.4; box-shadow: 0 0 4px rgba(16, 185, 129, 0.2); }
+    }
+    @media (max-width: 1024px) {
+      .online-indicator { padding: 6px 12px; margin-right: 5px; font-size: 12px; }
+      .online-indicator .count-text { display: none; }
+    }
+
   </style>
 </head>
 <body>
@@ -401,6 +424,11 @@
       <a href="privacidad.html">Privacidad</a>
     </nav>
     <div class="header-actions">
+      <div class="online-indicator" id="online-indicator" style="display: none;">
+        <span class="dot"></span>
+        <span id="online-count">0</span>
+        <span class="count-text"> Online</span>
+      </div>
       <a href="app.html" class="btn-login">
         <span class="desktop-text">APP Version WEB</span>
         <span class="mobile-text" style="display:none;">App Web</span>
@@ -776,11 +804,16 @@
       document.body.appendChild(script);
     }
 
-    // Lógica para el contador de visitas con Firebase
+    // Lógica para el contador de visitas con Firebase (ahora registra 1 visita por hora)
     function registrarVisita() {
       const visitasRef = fbDb.ref('estadisticas/visitas');
       
-      if (!sessionStorage.getItem('visita_registrada')) {
+      const ultimaVisita = localStorage.getItem('ultima_visita_timestamp');
+      const ahora = Date.now();
+      const horaEnMilisegundos = 60 * 60 * 1000;
+      
+      // Si no hay registro previo, o ya pasaron más de 60 minutos
+      if (!ultimaVisita || (ahora - parseInt(ultimaVisita)) > horaEnMilisegundos) {
         visitasRef.transaction((visitasActuales) => {
           return (visitasActuales || 0) + 1;
         }, (error, committed, snapshot) => {
@@ -791,10 +824,11 @@
             document.getElementById('count-visits').dataset.targetValue = totalVisitas;
             visitsDataFetched = true;
             tryAnimate('count-visits');
-            sessionStorage.setItem('visita_registrada', 'true');
+            localStorage.setItem('ultima_visita_timestamp', ahora.toString());
           }
         });
       } else {
+        // Si no pasó una hora, simplemente leemos y mostramos el total actual
         visitasRef.once('value').then((snapshot) => {
           const totalVisitas = snapshot.val() || 0;
           document.getElementById('count-visits').dataset.targetValue = totalVisitas;
@@ -802,6 +836,30 @@
           tryAnimate('count-visits');
         });
       }
+    }
+
+    // Lógica de Usuarios Online (Presencia)
+    function iniciarPresencia() {
+      const connectionsRef = fbDb.ref('estadisticas/online');
+      const connectedRef = fbDb.ref('.info/connected');
+      
+      connectedRef.on('value', (snap) => {
+        if (snap.val() === true) {
+          const myConnectionRef = connectionsRef.push();
+          myConnectionRef.onDisconnect().remove();
+          myConnectionRef.set(true);
+        }
+      });
+      
+      connectionsRef.on('value', (snap) => {
+        const totalOnline = snap.numChildren();
+        const indicator = document.getElementById('online-indicator');
+        const countSpan = document.getElementById('online-count');
+        if (indicator && countSpan) {
+          indicator.style.display = 'flex';
+          countSpan.textContent = totalOnline;
+        }
+      });
     }
 
     // Animación de los números (lenta y fluida)
@@ -827,6 +885,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       obtenerEstadisticasExcel();
       registrarVisita();
+      iniciarPresencia();
     });
   </script>
 </body>
