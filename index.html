@@ -65,7 +65,7 @@
     .logo { 
       font-size: 24px; font-weight: 900; color: var(--primary); 
       display: flex; align-items: center; gap: 8px; text-decoration: none; 
-      z-index: 10; letter-spacing: -0.5px;
+      z-index: 10; letter-spacing: -0.5px; white-space: nowrap; flex-shrink: 0;
     }
     .logo span { color: var(--accent); }
     
@@ -255,7 +255,7 @@
     .mobile-menu-btn { display: none; background: none; border: none; font-size: 28px; color: var(--primary); cursor: pointer; }
     
     @media (max-width: 1024px) {
-      header { padding: 20px 30px; }
+      header { padding: 15px 15px; gap: 10px; }
       .nav-links { 
         display: none; flex-direction: column; position: absolute; top: 75px; left: 20px; right: 20px;
         background: rgba(255,255,255,0.95); backdrop-filter: blur(25px); border-radius: 20px;
@@ -263,9 +263,9 @@
         gap: 24px; z-index: 1000; text-align: center;
       }
       .nav-links.active { display: flex !important; }
-      .header-actions { display: flex; align-items: center; }
-      .header-actions .btn-login { display: flex; flex-direction: column; padding: 4px 10px; font-size: 10px; margin-right: 8px; white-space: nowrap; align-items: center; gap: 2px; text-align: center; }
-      .mobile-menu-btn { display: block; }
+      .header-actions { display: flex; align-items: center; gap: 8px; }
+      .header-actions .btn-login { display: flex; flex-direction: column; padding: 4px 8px; font-size: 10px; margin-right: 0; white-space: nowrap; align-items: center; gap: 2px; text-align: center; }
+      .mobile-menu-btn { display: block; margin-left: auto; }
       
       .fab-wa { width: 55px; height: 55px; bottom: 20px; right: 20px; }
       .fab-wa svg { width: 28px; height: 28px; }
@@ -425,7 +425,7 @@
     <div class="header-actions">
       <a href="app.html" class="btn-login">
         <span class="desktop-text">APP VERSION WEB (Preguntero)</span>
-        <span class="mobile-text" style="display:none;">App Web (Preguntero)</span>
+        <span class="mobile-text" style="display:none;">APP WEB</span>
         <div class="online-indicator" id="online-indicator" style="display: none;">
           <span class="dot"></span>
           <span id="online-count">0</span>
