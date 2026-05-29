@@ -75,9 +75,9 @@
 
     .header-actions { display: flex; align-items: center; gap: 20px; }
     .btn-login {
-      background: var(--primary); color: white; padding: 12px 28px; border-radius: 100px;
-      font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
-      box-shadow: 0 10px 20px rgba(27,58,107,0.15); transition: all 0.3s; border: 2px solid transparent; text-transform: uppercase; letter-spacing: 0.5px;
+      background: var(--primary); color: white; padding: 6px 18px; border-radius: 100px; font-size: 12px;
+      font-weight: 800; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 10px 20px rgba(27,58,107,0.15); transition: all 0.3s; border: 2px solid transparent; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; line-height: 1.2;
     }
     .btn-login:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(27,58,107,0.25); background: white; color: var(--primary); border-color: var(--primary); }
     .btn-login svg { fill: currentColor; }
@@ -264,7 +264,7 @@
       }
       .nav-links.active { display: flex !important; }
       .header-actions { display: flex; align-items: center; }
-      .header-actions .btn-login { display: block; padding: 8px 16px; font-size: 13px; margin-right: 10px; white-space: nowrap; }
+      .header-actions .btn-login { display: flex; flex-direction: column; padding: 4px 10px; font-size: 10px; margin-right: 8px; white-space: nowrap; align-items: center; gap: 2px; text-align: center; }
       .mobile-menu-btn { display: block; }
       
       .fab-wa { width: 55px; height: 55px; bottom: 20px; right: 20px; }
@@ -384,14 +384,13 @@
       .stat-label { font-size: 13px; letter-spacing: 1.5px; }
     }
 
-    /* INDICADOR USUARIOS ONLINE */
+    /* INDICADOR USUARIOS ONLINE (DENTRO DEL BOTÓN) */
     .online-indicator {
-      display: flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
-      padding: 8px 16px; border-radius: 100px;
-      font-size: 13px; font-weight: 700; color: var(--text);
-      box-shadow: 0 5px 15px rgba(27,58,107,0.05); border: 1px solid rgba(255,255,255,0.9);
-      margin-right: 15px; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(0,0,0,0.2);
+      padding: 1px 6px; border-radius: 100px;
+      font-size: 10px; font-weight: 700; color: white;
+      margin-left: 0; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .online-indicator .dot {
       width: 8px; height: 8px; background: #10B981; border-radius: 50%;
@@ -403,7 +402,7 @@
       to { opacity: 0.4; box-shadow: 0 0 4px rgba(16, 185, 129, 0.2); }
     }
     @media (max-width: 1024px) {
-      .online-indicator { padding: 6px 12px; margin-right: 5px; font-size: 12px; }
+      .online-indicator { padding: 1px 4px; margin-left: 0; font-size: 9px; }
       .online-indicator .count-text { display: none; }
     }
 
@@ -424,14 +423,14 @@
       <a href="privacidad.html">Privacidad</a>
     </nav>
     <div class="header-actions">
-      <div class="online-indicator" id="online-indicator" style="display: none;">
-        <span class="dot"></span>
-        <span id="online-count">0</span>
-        <span class="count-text"> Online</span>
-      </div>
       <a href="app.html" class="btn-login">
-        <span class="desktop-text">APP Version WEB</span>
-        <span class="mobile-text" style="display:none;">App Web</span>
+        <span class="desktop-text">APP VERSION WEB (Preguntero)</span>
+        <span class="mobile-text" style="display:none;">App Web (Preguntero)</span>
+        <div class="online-indicator" id="online-indicator" style="display: none;">
+          <span class="dot"></span>
+          <span id="online-count">0</span>
+          <span class="count-text"> Online</span>
+        </div>
       </a>
       <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
     </div>
@@ -475,7 +474,7 @@
         <div class="ic-icon" style="color: var(--accent); background: rgba(212,137,10,0.1);">💻</div>
         <div class="ic-text">
           <h4>Versión Web</h4>
-          <p>Ingresá desde cualquier compu o iPhone/Android para practicar más cómodo.</p>
+          <p>Ingresá desde cualquier PC o iPhone/Android para practicar más cómodo.</p>
         </div>
       </div>
       <div class="info-card reveal delay-3">
@@ -838,25 +837,16 @@
       }
     }
 
-    // Lógica de Usuarios Online (Presencia)
+    // Lógica de Usuarios Online (Presencia - Solo LECTURA en el landing)
     function iniciarPresencia() {
       const connectionsRef = fbDb.ref('estadisticas/online');
-      const connectedRef = fbDb.ref('.info/connected');
-      
-      connectedRef.on('value', (snap) => {
-        if (snap.val() === true) {
-          const myConnectionRef = connectionsRef.push();
-          myConnectionRef.onDisconnect().remove();
-          myConnectionRef.set(true);
-        }
-      });
       
       connectionsRef.on('value', (snap) => {
         const totalOnline = snap.numChildren();
         const indicator = document.getElementById('online-indicator');
         const countSpan = document.getElementById('online-count');
         if (indicator && countSpan) {
-          indicator.style.display = 'flex';
+          indicator.style.display = 'inline-flex';
           countSpan.textContent = totalOnline;
         }
       });

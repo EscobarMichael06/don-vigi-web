@@ -975,6 +975,23 @@ function cerrarSesion() {
     cargarApp();
   }
 })();
+
+// ═══════════════════════════════════════
+// PRESENCIA (USUARIOS ONLINE)
+// ═══════════════════════════════════════
+function iniciarPresencia() {
+  const connectionsRef = fbDb.ref('estadisticas/online');
+  const connectedRef = fbDb.ref('.info/connected');
+  
+  connectedRef.on('value', (snap) => {
+    if (snap.val() === true) {
+      const myConnectionRef = connectionsRef.push();
+      myConnectionRef.onDisconnect().remove();
+      myConnectionRef.set(true);
+    }
+  });
+}
+iniciarPresencia();
 </script>
 </body>
 </html>
