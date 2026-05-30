@@ -82,6 +82,22 @@
     .btn-login:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(27,58,107,0.25); background: white; color: var(--primary); border-color: var(--primary); }
     .btn-login svg { fill: currentColor; }
 
+    .btn-login-special {
+      background: linear-gradient(45deg, var(--primary), var(--accent), var(--primary));
+      background-size: 200% 200%;
+      animation: gradientGlow 3s ease infinite;
+      border: none;
+      color: white;
+    }
+    .btn-login-special:hover {
+      background: white;
+    }
+    @keyframes gradientGlow {
+      0% { background-position: 0% 50%; box-shadow: 0 0 10px rgba(27,58,107,0.4); }
+      50% { background-position: 100% 50%; box-shadow: 0 0 20px rgba(212,137,10,0.6); }
+      100% { background-position: 0% 50%; box-shadow: 0 0 10px rgba(27,58,107,0.4); }
+    }
+
 
     /* ── HERO SECTION ── */
     .hero {
@@ -424,9 +440,9 @@
       <a href="privacidad.html">Privacidad</a>
     </nav>
     <div class="header-actions">
-      <a href="app.html" class="btn-login">
-        <span class="desktop-text">APP VERSION WEB (Preguntero)</span>
-        <span class="mobile-text" style="display:none;">APP WEB</span>
+      <a href="app.html" class="btn-login btn-login-special">
+        <span class="desktop-text">APP VERSIÓN WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+        <span class="mobile-text" style="display:none;">APP WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
       </a>
       <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
     </div>
