@@ -308,7 +308,8 @@
       position: relative; z-index: 20;
     }
     .stats-container {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;
+      max-width: 900px; margin: 0 auto;
       background: linear-gradient(135deg, rgba(27,58,107,0.9), rgba(17,36,69,0.95));
       backdrop-filter: blur(20px);
       border-radius: 35px; padding: 50px 40px; color: white;
@@ -426,11 +427,6 @@
       <a href="app.html" class="btn-login">
         <span class="desktop-text">APP VERSION WEB (Preguntero)</span>
         <span class="mobile-text" style="display:none;">APP WEB</span>
-        <div class="online-indicator" id="online-indicator" style="display: none;">
-          <span class="dot"></span>
-          <span id="online-count">0</span>
-          <span class="count-text"> Online</span>
-        </div>
       </a>
       <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
     </div>
@@ -500,7 +496,7 @@
         <div class="stat-number" id="count-web">0</div>
         <div class="stat-label">Usuarios Web</div>
       </div>
-      <div class="stat-box">
+      <div class="stat-box" style="display: none;">
         <div class="stat-icon">👁️</div>
         <div class="stat-number" id="count-visits">0</div>
         <div class="stat-label">Visitas Totales</div>
