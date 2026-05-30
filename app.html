@@ -76,6 +76,24 @@
     .login-btn:hover { transform:translateY(-2px); box-shadow:0 12px 25px rgba(27,58,107,0.3); }
     .login-btn:disabled { opacity:.6; transform:none; cursor:not-allowed; }
     .login-error { color:var(--red); font-size:14px; margin-top:12px; font-weight:600; }
+    .venc-banner {
+      background: #D4890A;
+      color: #FFFFFF;
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      border-bottom: 2px solid rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .venc-banner strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .venc-banner a { color: #FFFFFF; text-decoration: underline; font-weight: 700; }
+    .venc-info {
+      padding: 8px 14px;
+      font-size: 12.5px;
+      text-align: center;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .venc-info strong { font-weight: 800; }
     .login-hint { font-size:13px; color:var(--muted); margin-top:32px; font-weight:500; }
     .btn-wa-login {
       display:inline-flex; align-items:center; gap:10px;
@@ -318,6 +336,8 @@
     </span>
     <button class="topbar-back" onclick="irHistorial()" title="Historial">📊</button>
   </div>
+  <div id="venc-info" class="venc-info" style="display:none;"></div>
+  <div id="venc-banner" class="venc-banner" style="display:none;"></div>
   <div class="content">
     <div id="selector-content"></div>
   </div>
@@ -447,6 +467,20 @@ document.getElementById('code-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') validarCodigo();
 });
 
+// ── Vencimiento anual del acceso ───────────────────────────────────────
+const ANIO_MS = 365 * 24 * 60 * 60 * 1000;
+const DIA_MS = 86400000;
+
+function fmtFechaVenc(ms) {
+  if (!ms) return '—';
+  const d = new Date(ms);
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+}
+function diasHastaVenc(ms) {
+  if (!ms) return 0;
+  return Math.ceil((ms - Date.now()) / DIA_MS);
+}
+
 async function validarCodigo() {
   const codigo = document.getElementById('code-input').value.trim().toUpperCase();
   const errEl  = document.getElementById('login-error');
@@ -470,6 +504,24 @@ async function validarCodigo() {
       // Código ya activado: solo puede entrar el dispositivo que tiene el token correcto
       const sesionLocal = (() => { try { return JSON.parse(localStorage.getItem('ppolicial_acceso') || 'null'); } catch(_) { return null; } })();
       if (sesionLocal && sesionLocal.codigo === codigo && sesionLocal.token && sesionLocal.token === data.session_token) {
+        // Activación retroactiva (códigos legacy sin vencimiento) → 1 año desde HOY.
+        let expira_en = typeof data.expira_en === 'number' ? data.expira_en : 0;
+        if (!expira_en) {
+          const ahora = Date.now();
+          expira_en = ahora + ANIO_MS;
+          try {
+            await fbDb.ref(`web_codigos/${codigo}`).update({
+              activado_en: ahora,
+              expira_en,
+            });
+          } catch(_) { /* sin red → expira_en se valida localmente */ }
+        }
+        if (Date.now() > expira_en) {
+          mostrarError(`Tu acceso venció el ${fmtFechaVenc(expira_en)}. Contactá al administrador para renovarlo.`);
+          return;
+        }
+        // Guardar vencimiento en localStorage para mostrarlo en banner.
+        guardarSesionExpira(codigo, sesionLocal.token, expira_en);
         await cargarApp();
         return;
       }
@@ -477,16 +529,75 @@ async function validarCodigo() {
       return;
     }
 
-    // Primera activación: generar token de sesión único
+    // Primera activación: generar token de sesión único + fecha de vencimiento
     const token = crypto.randomUUID ? crypto.randomUUID() : ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
-    await fbDb.ref(`web_codigos/${codigo}`).update({ usado: true, usado_en: new Date().toISOString(), session_token: token });
-    localStorage.setItem('ppolicial_acceso', JSON.stringify({ codigo, token, fecha: new Date().toISOString() }));
+    const ahora = Date.now();
+    const expira_en = ahora + ANIO_MS;
+    await fbDb.ref(`web_codigos/${codigo}`).update({
+      usado: true,
+      usado_en: new Date().toISOString(),
+      session_token: token,
+      activado_en: ahora,
+      expira_en,
+    });
+    guardarSesionExpira(codigo, token, expira_en);
     await cargarApp();
   } catch(e) {
     mostrarError('Error de conexión. Verificá tu internet e intentá de nuevo.');
   } finally {
     btn.disabled = false;
     btn.textContent = 'INGRESAR';
+  }
+}
+
+function guardarSesionExpira(codigo, token, expira_en) {
+  localStorage.setItem('ppolicial_acceso', JSON.stringify({
+    codigo, token,
+    fecha: new Date().toISOString(),
+    expira_en,
+  }));
+  actualizarBannerVencimiento(expira_en);
+}
+
+function actualizarBannerVencimiento(expira_en) {
+  if (!expira_en) return;
+  const dias = diasHastaVenc(expira_en);
+  const banner = document.getElementById('venc-banner');
+  const info = document.getElementById('venc-info');
+  if (!banner || !info) return;
+
+  // Indicador permanente con la fecha (siempre visible si hay vencimiento).
+  info.style.display = 'block';
+  if (dias > 30) {
+    info.innerHTML = `🛡️ Acceso vigente hasta el <strong>${fmtFechaVenc(expira_en)}</strong> (${dias} días)`;
+    info.style.background = 'rgba(27,58,107,0.08)';
+    info.style.color = '#1B3A6B';
+  } else if (dias > 10) {
+    info.innerHTML = `⏰ Tu acceso vence en <strong>${dias} días</strong> (el ${fmtFechaVenc(expira_en)})`;
+    info.style.background = 'rgba(212,137,10,0.12)';
+    info.style.color = '#A86808';
+  } else {
+    info.style.display = 'none'; // el banner grande de abajo se encarga
+  }
+
+  // Banner grande con CTA WhatsApp solo cuando se acerca o venció.
+  if (dias <= 10 && dias > 0) {
+    banner.style.display = 'block';
+    banner.style.background = '#D4890A';
+    banner.innerHTML = `
+      <strong>⏰ Tu acceso vence en ${dias} día${dias === 1 ? '' : 's'}</strong> (el ${fmtFechaVenc(expira_en)}).
+      Si querés renovarlo, contactá al administrador:
+      <a href="https://wa.me/5493417190648?text=Hola%2C%20quiero%20renovar%20mi%20acceso%20a%20DON%20VIGI%20(web)" target="_blank" style="color:#fff; text-decoration:underline; font-weight:700;">Renovar por WhatsApp</a>
+    `;
+  } else if (dias <= 0) {
+    banner.style.display = 'block';
+    banner.style.background = '#E53E3E';
+    banner.innerHTML = `
+      <strong>❌ Tu acceso venció</strong>. Contactá al administrador para renovarlo:
+      <a href="https://wa.me/5493417190648?text=Hola%2C%20mi%20acceso%20web%20venci%C3%B3%20y%20quiero%20renovarlo" target="_blank" style="color:#fff; text-decoration:underline; font-weight:700;">Renovar por WhatsApp</a>
+    `;
+  } else {
+    banner.style.display = 'none';
   }
 }
 
@@ -973,13 +1084,45 @@ function cerrarSesion() {
     // Verificar que el token local coincide con Firebase
     const snap = await fbDb.ref(`web_codigos/${sesion.codigo}`).get();
     if (snap.exists() && snap.val().session_token === sesion.token) {
+      const data = snap.val();
+      // Bajar el vencimiento de Firebase (puede haber sido renovado por el admin)
+      let expira_en = typeof data.expira_en === 'number' ? data.expira_en : 0;
+      if (!expira_en) {
+        // Código legacy → activación retroactiva 1 año desde HOY
+        const ahora = Date.now();
+        expira_en = ahora + ANIO_MS;
+        try {
+          await fbDb.ref(`web_codigos/${sesion.codigo}`).update({
+            activado_en: ahora,
+            expira_en,
+          });
+        } catch(_) { /* sin red */ }
+      }
+      if (Date.now() > expira_en) {
+        // Acceso vencido
+        mostrarScreen('screen-login');
+        setTimeout(() => mostrarError(`Tu acceso venció el ${fmtFechaVenc(expira_en)}. Contactá al administrador para renovarlo.`), 200);
+        return;
+      }
+      guardarSesionExpira(sesion.codigo, sesion.token, expira_en);
       cargarApp();
     } else {
       // Token inválido (admin resetó el código o fue robado)
       localStorage.removeItem('ppolicial_acceso');
     }
   } catch(_) {
-    // Sin internet: confiar en el localStorage para no bloquear offline
+    // Sin internet: confiar en el localStorage. Verificar vencimiento local
+    // para que el truco de "atrasar la fecha del dispositivo" no funcione
+    // indefinidamente — pero permitimos cargar la app con el dato cacheado.
+    try {
+      const sesion = JSON.parse(raw);
+      if (sesion.expira_en && Date.now() > sesion.expira_en) {
+        mostrarScreen('screen-login');
+        setTimeout(() => mostrarError(`Tu acceso venció el ${fmtFechaVenc(sesion.expira_en)}. Contactá al administrador para renovarlo.`), 200);
+        return;
+      }
+      if (sesion.expira_en) actualizarBannerVencimiento(sesion.expira_en);
+    } catch(_) {}
     cargarApp();
   }
 })();
