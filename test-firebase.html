@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+</head>
+<body>
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyA5dwOVjY8gCwi1fMGWUdx-7sBRq0jDbgg",
+      authDomain: "microtrafico-pdi-d304c.firebaseapp.com",
+      databaseURL: "https://microtrafico-pdi-d304c-default-rtdb.firebaseio.com/",
+      projectId: "microtrafico-pdi-d304c",
+      storageBucket: "microtrafico-pdi-d304c.firebasestorage.app",
+      messagingSenderId: "631537020389",
+      appId: "1:631537020389:web:66f7edb29067a52cf2930c"
+    });
+    const fbDb = firebase.database();
+    const visitasRef = fbDb.ref('estadisticas/visitas');
+    
+    visitasRef.transaction((v) => {
+      return (v || 0) + 1;
+    }, (error, committed, snapshot) => {
+      if (error) {
+        console.error('Firebase Error:', error.message);
+        require('fs').writeFileSync('firebase-error.txt', error.message);
+      } else {
+        require('fs').writeFileSync('firebase-success.txt', snapshot.val().toString());
+      }
+    });
+  </script>
+</body>
+</html>
