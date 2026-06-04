@@ -849,8 +849,14 @@ function iniciarConCantidad(cantidad) {
       if (dificultadActual && (p.d || 'facil') !== dificultadActual) return false;
       return true;
     })
-    .map(([id, p]) => ({ id, ...p }))
-    .sort(() => Math.random() - 0.5);
+    .map(([id, p]) => ({ id, ...p }));
+
+  // Shuffle Fisher-Yates: garantiza azar uniforme, mezcla materias entre sí.
+  // El .sort(() => Math.random() - 0.5) anterior dejaba bloques agrupados.
+  for (let i = todas.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [todas[i], todas[j]] = [todas[j], todas[i]];
+  }
 
   preguntasActuales = todas.slice(0, cantidad);
   preguntaIdx  = 0;
