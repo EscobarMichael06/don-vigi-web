@@ -166,7 +166,7 @@
   <main>
     <div class="card-container">
       <h1>Política de Privacidad y Términos de Uso</h1>
-      <p class="fecha">Última actualización: mayo de 2026</p>
+      <p class="fecha">Última actualización: junio de 2026</p>
 
       <section>
         <h2>1. Información general</h2>
@@ -180,20 +180,23 @@
 
       <section>
         <h2>2. Datos que recopilamos</h2>
-        <p>La aplicación <strong>no recopila datos personales</strong> como nombre, dirección, correo electrónico ni número de teléfono.</p>
+        <p>La aplicación <strong>no recopila datos personales</strong> como nombre, dirección, correo electrónico ni número de teléfono al instalarla.</p>
         <p>Los únicos datos que se gestionan son:</p>
         <ul>
           <li><strong>Código de acceso:</strong> un código alfanumérico único que el usuario obtiene al adquirir la licencia. Se almacena localmente en el dispositivo para mantener la sesión activa.</li>
           <li><strong>Token de sesión:</strong> un identificador aleatorio generado en el dispositivo al activar el código por primera vez. Se utiliza únicamente para verificar que el acceso corresponde al dispositivo autorizado.</li>
           <li><strong>Estadísticas de uso anónimas:</strong> cantidad de preguntas respondidas y porcentaje de aciertos, almacenados localmente en el dispositivo (app móvil) o de forma anónima en Firebase (versión web).</li>
+          <li><strong>Respaldo en la nube (opcional):</strong> si el usuario elige respaldar sus datos manualmente desde la pantalla "Respaldo" del Módulo 2, se sube a Firebase un snapshot de sus adicionales, configuración del calendario de guardias, excepciones y resultados del Módulo 1. Identificado por un código personal de respaldo (formato <code>VIGI-XXXX-XXXX</code>) que el usuario genera y guarda. Ver sección 14.</li>
+          <li><strong>Anuncios de "Servicios que buscan relevos":</strong> los publicados por el usuario incluyen nombre del servicio, horario, fecha, ubicación, número de WhatsApp y notas. Son visibles para todos los demás usuarios de la app. Ver sección 13.</li>
         </ul>
       </section>
 
       <section>
         <h2>3. Almacenamiento de datos</h2>
         <ul>
-          <li><strong>App móvil (Android):</strong> todos los datos se almacenan en la base de datos local del dispositivo (SQLite). Ningún dato personal se envía a servidores externos.</li>
-          <li><strong>Versión web:</strong> el código de acceso y el token de sesión se almacenan en Firebase Realtime Database con el único fin de verificar la validez del acceso. No se asocian a datos personales identificables.</li>
+          <li><strong>App móvil (Android):</strong> los datos del usuario (adicionales, calendario, historial de exámenes) se almacenan en la base de datos local del dispositivo (SQLite). No se envían a servidores externos salvo que el usuario active el respaldo en la nube o publique anuncios públicos.</li>
+          <li><strong>Versión web:</strong> el código de acceso y el token de sesión se almacenan en Firebase Realtime Database con el único fin de verificar la validez del acceso.</li>
+          <li><strong>Respaldo en la nube y anuncios:</strong> los datos cargados a Firebase para estas funciones permanecen en sus servidores hasta que el usuario los elimine o se cumplan las reglas de expiración automática (30 días sin actividad para anuncios; sin vencimiento para respaldos hasta que sean reemplazados o eliminados).</li>
         </ul>
       </section>
 
@@ -208,7 +211,14 @@
 
       <section>
         <h2>5. Permisos de la aplicación</h2>
-        <p>La app móvil solo pide permiso para enviarte notificaciones, no solicita permisos especiales del dispositivo (cámara, micrófono, ubicación, contactos, etc.).</p>
+        <p>La app móvil solo pide permiso para enviarte notificaciones. No solicita permisos especiales del dispositivo (cámara, micrófono, ubicación, contactos, etc.).</p>
+        <p>
+          Algunas funciones abren aplicaciones externas mediante enlaces estándar del sistema:
+          WhatsApp (para contactar al administrador o a otros usuarios de los anuncios) y
+          Google Maps (para mostrar la ubicación de un servicio publicado en el Módulo 2).
+          La app no envía datos por su cuenta a esas aplicaciones, simplemente abre el enlace
+          y queda a criterio del usuario continuar.
+        </p>
       </section>
 
       <section>
@@ -290,7 +300,7 @@
         </p>
         <p>
           En estos casos, el usuario puede solicitar la <strong>reemisión del código por única vez</strong>, sin costo adicional,
-          enviando al soporte por WhatsApp:
+          enviando al soporte por WhatsApp o por correo a <a href="mailto:soportedonvigi@gmail.com">soportedonvigi@gmail.com</a>:
         </p>
         <ul>
           <li>El comprobante de la compra original.</li>
@@ -300,6 +310,10 @@
           <strong>Esta reemisión es única por compra.</strong> A partir de la segunda solicitud (cualquiera sea el motivo:
           nuevo cambio de teléfono, formateo, etc.) el usuario deberá adquirir una nueva licencia. La reemisión
           no aplica a códigos compartidos con terceros, ni a códigos bloqueados por incumplimiento de estos términos.
+        </p>
+        <p>
+          <strong>Para no perder tus datos al cambiar de teléfono</strong>, te recomendamos generar y guardar tu
+          código personal de respaldo desde la pantalla "Respaldo en la nube" (ver sección 14).
         </p>
       </section>
 
@@ -335,7 +349,55 @@
       </section>
 
       <section>
-        <h2>13. Limitación de responsabilidad</h2>
+        <h2>13. Servicios que buscan relevos (Módulo 2)</h2>
+        <p>
+          La app permite publicar anuncios públicos para conseguir un relevo de un servicio adicional.
+          Estos anuncios son <strong>visibles para todos los demás usuarios de la app</strong> e incluyen los datos
+          que el propio usuario cargó: nombre del servicio, horario, fecha, ubicación (opcional, con enlace
+          a Google Maps), tipo y <strong>número de WhatsApp de contacto</strong>.
+        </p>
+        <p>
+          Es responsabilidad exclusiva del usuario que publica:
+        </p>
+        <ul>
+          <li>Verificar que la información cargada sea correcta y no contenga datos sensibles.</li>
+          <li>Estar habilitado para difundir ese servicio (no publicar servicios que requieran confidencialidad).</li>
+          <li>Hacerse cargo del contacto que reciba a través del número de WhatsApp que él mismo publicó.</li>
+        </ul>
+        <p>
+          Los anuncios se eliminan automáticamente cuando: el usuario marca "ya conseguí relevo" (a la hora),
+          el servicio ya pasó su horario de inicio, o transcurren 30 días desde la publicación.
+          DON VIGI <strong>no media ni garantiza</strong> la concreción del relevo entre usuarios; los
+          intercambios y compromisos quedan exclusivamente entre las partes que se contactan por WhatsApp.
+        </p>
+      </section>
+
+      <section>
+        <h2>14. Respaldo en la nube (código VIGI-XXXX-XXXX)</h2>
+        <p>
+          La app ofrece una función opcional de <strong>respaldo en la nube</strong> que sube a Firebase un snapshot
+          de los datos del usuario (adicionales cargados, configuración del calendario de guardias, excepciones,
+          eventos del Moodle marcados como hechos y resultados del Módulo 1). El respaldo se identifica con un
+          <strong>código personal generado automáticamente</strong> con el formato <code>VIGI-XXXX-XXXX</code>.
+        </p>
+        <p>
+          Para restaurar los datos en otro dispositivo o tras reinstalar la app, el usuario debe ingresar ese
+          mismo código en la pantalla "Respaldo". Recomendamos guardar el código en un lugar seguro
+          (por ejemplo enviárselo a uno mismo por WhatsApp con el botón disponible en la app).
+        </p>
+        <p>
+          <strong>Importante:</strong>
+        </p>
+        <ul>
+          <li>Cualquier persona que tenga ese código puede restaurar tus datos en cualquier dispositivo. <strong>No lo compartas.</strong></li>
+          <li>El respaldo se actualiza automáticamente cuando hacés cambios (con una frecuencia máxima de un respaldo cada cinco minutos para no saturar la red).</li>
+          <li>Si perdés el código y reinstalás la app, los datos no se pueden recuperar — el código es la única forma de identificar tu respaldo.</li>
+          <li>DON VIGI no se responsabiliza por la pérdida de datos derivada del extravío del código de respaldo.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>15. Limitación de responsabilidad</h2>
         <p>
           DON VIGI es una herramienta <strong>de práctica y estudio</strong>. Su uso facilita la preparación, pero
           <strong> NO garantiza la aprobación</strong> de ningún concurso, examen, evaluación ni promoción jerárquica.
@@ -353,7 +415,7 @@
       </section>
 
       <section>
-        <h2>14. Vigencia, suspensión y cancelación</h2>
+        <h2>16. Vigencia, suspensión y cancelación</h2>
         <p>
           DON VIGI puede suspender o cancelar el acceso de un usuario, sin obligación de reembolso, si verifica
           el incumplimiento de cualquiera de los puntos detallados en estos términos — en particular el uso
@@ -366,7 +428,7 @@
       </section>
 
       <section>
-        <h2>15. Aceptación de estos términos</h2>
+        <h2>17. Aceptación de estos términos</h2>
         <p>
           Al activar el código de acceso en la app móvil o en la versión web, el usuario declara haber leído,
           comprendido y aceptado en su totalidad esta Política de Privacidad y los presentes Términos de Uso.
@@ -380,10 +442,13 @@
       <section>
         <h2>Contacto</h2>
         <p>
-          Para consultas relacionadas con la privacidad, reembolsos, reemisión de códigos o cualquier otra
-          cuestión vinculada al servicio, podés contactarnos a través de WhatsApp al número disponible en
-          la pantalla principal de la app y en <a href="https://donvigi.com" target="_blank">donvigi.com</a>.
+          Para consultas relacionadas con la privacidad, reembolsos, reemisión de códigos, respaldo de datos
+          o cualquier otra cuestión vinculada al servicio, podés contactarnos por:
         </p>
+        <ul>
+          <li><strong>Correo electrónico:</strong> <a href="mailto:soportedonvigi@gmail.com">soportedonvigi@gmail.com</a></li>
+          <li><strong>WhatsApp:</strong> al número disponible en la pantalla principal de la app y en <a href="https://donvigi.com" target="_blank">donvigi.com</a>.</li>
+        </ul>
       </section>
     </div>
   </main>
