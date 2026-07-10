@@ -88,30 +88,33 @@ header {
   position: relative;
   max-width: 1400px; margin: 0 auto;
   padding: 60px 80px 40px; 
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
   min-height: auto;
+  gap: 40px;
 }
 
 .hero-left {
-  flex: 1; max-width: 650px; z-index: 10; position: relative;
+  flex: 1; max-width: 800px; z-index: 10; position: relative;
+  display: flex; flex-direction: column; align-items: center;
 }
 .hero-subtitle { 
   font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); 
   text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block;
 }
 .hero-title { 
-  font-size: 72px; font-weight: 900; line-height: 1.05; margin-bottom: 24px; letter-spacing: -2.5px; text-wrap: balance;
+  font-size: 52px; font-weight: 900; line-height: 1.15; margin-bottom: 24px; letter-spacing: -1.5px; text-wrap: balance;
   background: linear-gradient(135deg, var(--primary), var(--primary-light)); 
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
   text-shadow: 0 10px 30px rgba(27,58,107,0.1);
+  text-align: center;
 }
 
-.hero-desc { font-size: 18px; color: var(--muted); margin-bottom: 40px; font-weight: 400; line-height: 1.7; max-width: 550px; text-wrap: pretty;}
+.hero-desc { font-size: 18px; color: var(--muted); margin: 0 auto 40px; font-weight: 400; line-height: 1.7; max-width: 650px; text-wrap: pretty; text-align: center;}
 
 /* ── HERO RIGHT (GLOW & CAROUSEL) ── */
 .hero-right {
-  flex: 1; position: relative; display: flex; justify-content: flex-end; align-items: center;
-  height: 450px;
+  flex: 1; position: relative; display: flex; justify-content: center; align-items: center;
+  height: 380px; width: 100%;
 }
 
 .glow-bg {
