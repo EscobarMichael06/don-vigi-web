@@ -60,7 +60,7 @@ header {
 
 .header-actions { display: flex; align-items: center; gap: 20px; }
 .btn-login {
-  background: var(--primary); color: white; padding: 6px 18px; border-radius: 100px; font-size: 12px;
+  background: var(--primary); color: white; padding: 6px 18px; border-radius: 12px; font-size: 12px;
   font-weight: 800; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-family: 'Plus Jakarta Sans', sans-serif;
   box-shadow: 0 10px 20px rgba(27,58,107,0.15); transition: all 0.3s; border: 2px solid transparent; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; line-height: 1.2;
 }
@@ -209,7 +209,7 @@ header {
 .price-box .amount { font-size: 80px; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 10px; letter-spacing: -3px; font-family: 'Plus Jakarta Sans', sans-serif;}
 .price-box .period { font-size: 16px; font-weight: 600; opacity: 0.8; margin-bottom: 40px; letter-spacing: 2px; text-transform: uppercase;}
 .btn-buy {
-  display: inline-block; width: 100%; background: white; color: var(--text); padding: 20px; border-radius: 100px;
+  display: inline-block; width: 100%; background: white; color: var(--text); padding: 20px; border-radius: 12px;
   font-size: 18px; font-weight: 800; text-decoration: none; transition: all 0.3s; font-family: 'Plus Jakarta Sans', sans-serif;
   text-align: center;
 }
@@ -224,7 +224,7 @@ header {
 
 .reset-input { width: 100%; padding: 20px; border: 2px solid var(--border); border-radius: 20px; font-size: 22px; font-weight: 800; text-align: center; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 24px; outline: none; background: rgba(255,255,255,0.5); transition: all 0.3s; font-family: monospace;}
 .reset-input:focus { border-color: var(--primary); background: white; box-shadow: 0 10px 20px rgba(27,58,107,0.05);}
-.btn-action { width: 100%; background: var(--primary); color: white; padding: 20px; border-radius: 100px; font-size: 18px; font-weight: 800; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.3s; }
+.btn-action { width: 100%; background: var(--primary); color: white; padding: 20px; border-radius: 12px; font-size: 18px; font-weight: 800; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.3s; }
 .btn-action:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(27,58,107,0.2);}
 
 /* Formulario Contacto */
