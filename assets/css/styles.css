@@ -60,11 +60,13 @@ header {
 
 .header-actions { display: flex; align-items: center; gap: 20px; }
 .btn-login {
-  background: var(--primary); color: white; padding: 6px 18px; border-radius: 12px; font-size: 12px;
+  background: var(--primary); color: white; padding: 8px 18px; border-radius: 8px; font-size: 12px;
   font-weight: 800; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-family: 'Plus Jakarta Sans', sans-serif;
-  box-shadow: 0 10px 20px rgba(27,58,107,0.15); transition: all 0.3s; border: 2px solid transparent; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; line-height: 1.2;
+  transition: all 0.1s ease; border: none; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; line-height: 1.2;
+  border-bottom: 3px solid #0F2344;
 }
-.btn-login:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(27,58,107,0.25); background: white; color: var(--primary); border-color: var(--primary); }
+.btn-login:hover { transform: translateY(1.5px); border-bottom-width: 1.5px; }
+.btn-login:active { transform: translateY(3px); border-bottom-width: 0px; }
 .btn-login svg { fill: currentColor; }
 
 .btn-login-special {
@@ -73,14 +75,12 @@ header {
   animation: gradientGlow 3s ease infinite;
   border: none;
   color: white;
-}
-.btn-login-special:hover {
-  background: white;
+  border-bottom: 3px solid #7C5104;
 }
 @keyframes gradientGlow {
-  0% { background-position: 0% 50%; box-shadow: 0 0 10px rgba(27,58,107,0.4); }
-  50% { background-position: 100% 50%; box-shadow: 0 0 20px rgba(212,137,10,0.6); }
-  100% { background-position: 0% 50%; box-shadow: 0 0 10px rgba(27,58,107,0.4); }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* ── HERO SECTION ── */
@@ -209,11 +209,12 @@ header {
 .price-box .amount { font-size: 80px; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 10px; letter-spacing: -3px; font-family: 'Plus Jakarta Sans', sans-serif;}
 .price-box .period { font-size: 16px; font-weight: 600; opacity: 0.8; margin-bottom: 40px; letter-spacing: 2px; text-transform: uppercase;}
 .btn-buy {
-  display: inline-block; width: 100%; background: white; color: var(--text); padding: 20px; border-radius: 12px;
-  font-size: 18px; font-weight: 800; text-decoration: none; transition: all 0.3s; font-family: 'Plus Jakarta Sans', sans-serif;
-  text-align: center;
+  display: inline-block; width: 100%; background: white; color: var(--text); padding: 20px; border-radius: 10px;
+  font-size: 18px; font-weight: 800; text-decoration: none; transition: all 0.1s ease; font-family: 'Plus Jakarta Sans', sans-serif;
+  text-align: center; border-bottom: 4px solid #CBD5E1;
 }
-.btn-buy:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); color: var(--primary); }
+.btn-buy:hover { transform: translateY(2px); border-bottom-width: 2px; }
+.btn-buy:active { transform: translateY(4px); border-bottom-width: 0px; }
 
 /* ── RESET CODE & CONTACTO ── */
 .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
@@ -224,8 +225,27 @@ header {
 
 .reset-input { width: 100%; padding: 20px; border: 2px solid var(--border); border-radius: 20px; font-size: 22px; font-weight: 800; text-align: center; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 24px; outline: none; background: rgba(255,255,255,0.5); transition: all 0.3s; font-family: monospace;}
 .reset-input:focus { border-color: var(--primary); background: white; box-shadow: 0 10px 20px rgba(27,58,107,0.05);}
-.btn-action { width: 100%; background: var(--primary); color: white; padding: 20px; border-radius: 12px; font-size: 18px; font-weight: 800; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.3s; }
-.btn-action:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(27,58,107,0.2);}
+.btn-action {
+  width: 100%; background: var(--primary); color: white; padding: 20px; border-radius: 10px; font-size: 18px; font-weight: 800; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.1s ease;
+  border-bottom: 4px solid #0F2344; display: inline-flex; align-items: center; justify-content: center;
+}
+.btn-action:hover { transform: translateY(2px); border-bottom-width: 2px; background: var(--primary-light); }
+.btn-action:active { transform: translateY(4px); border-bottom-width: 0px; box-shadow: none; }
+
+.btn-action.dark {
+  background: var(--text);
+  border-bottom: 4px solid #0F172A;
+}
+.btn-action.dark:hover {
+  background: #334155;
+}
+
+.btn-action-secondary {
+  width: 100%; background: rgba(27,58,107,0.07); color: var(--primary); padding: 20px; border-radius: 10px; font-size: 18px; font-weight: 800; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.1s ease;
+  border-bottom: 4px solid rgba(27,58,107,0.2); display: inline-flex; align-items: center; justify-content: center; text-decoration: none; text-align: center;
+}
+.btn-action-secondary:hover { transform: translateY(2px); border-bottom-width: 2px; background: rgba(27,58,107,0.12); }
+.btn-action-secondary:active { transform: translateY(4px); border-bottom-width: 0px; box-shadow: none; }
 
 /* Formulario Contacto */
 .form-group { margin-bottom: 20px; }
