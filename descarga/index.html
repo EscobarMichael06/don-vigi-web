@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Descarga la App · DON VIGI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  
+  <style>
+    /* Estilos específicos para la sección de Descargas */
+    .download-hero {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-top: 40px;
+    }
+    
+    .requirements-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .requirement-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(27,58,107,0.02);
+    }
+    .requirement-title {
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .requirement-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    
+    /* Mockups de interfaz de la app móviles con CSS puro */
+    .app-screenshots-section {
+      padding-top: 60px;
+      background: rgba(255, 255, 255, 0.5);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      max-width: 1000px;
+      margin: 40px auto 0;
+    }
+    .phone-mockup-css {
+      background: #0B132B;
+      border: 12px solid #1E293B;
+      border-radius: 40px;
+      aspect-ratio: 9/19;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .phone-mockup-css::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 20px;
+      background: #1E293B;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+      z-index: 10;
+    }
+    .phone-header-css {
+      height: 50px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding-top: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .phone-content-css {
+      flex: 1;
+      padding: 20px 15px;
+      overflow-y: auto;
+      color: white;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    /* Simulación Simulador */
+    .mock-question {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .mock-option {
+      background: rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+    }
+    .mock-option.correct {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--green);
+    }
+    
+    /* Simulación Control de adicionales */
+    .mock-service-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 14px;
+      padding: 12px;
+      border-left: 4px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mock-service-title {
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .mock-service-hours {
+      font-size: 11px;
+      color: #94A3B8;
+      margin-top: 4px;
+    }
+    .mock-service-price {
+      font-weight: 800;
+      color: var(--accent-light);
+      font-size: 14px;
+    }
+    
+    /* Simulación Relevos */
+    .mock-relevo-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .mock-relevo-badge {
+      display: inline-block;
+      background: rgba(212,137,10,0.2);
+      color: var(--accent-light);
+      padding: 2px 6px;
+      border-radius: 100px;
+      font-size: 9px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    
+    @media (max-width: 1024px) {
+      .requirements-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .screenshot-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        max-width: 320px;
+        margin: 30px auto 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="../" class="logo" style="display: flex; align-items: center; gap: 10px;">
+      <img src="../assets/images/logo.jpg" alt="DON VIGI" style="height: 48px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+      DON <span>VIGI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../">Inicio</a>
+      <a href="../como-funciona/">Cómo funciona</a>
+      <a href="../nosotros/">Nosotros</a>
+      <a href="../comprar/">Comprar</a>
+      <a href="./" style="color: var(--primary);">Descarga</a>
+      <a href="../contacto/">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </nav>
+    <div class="header-actions">
+      <a href="../app/" class="btn-login btn-login-special">
+        <span class="desktop-text">APP VERSIÓN WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+        <span class="mobile-text" style="display:none;">APP WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+      </a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
+    </div>
+  </header>
+
+  <!-- DESCARGA MAIN HERO -->
+  <section class="section-padding reveal active" style="padding-top: 40px; padding-bottom: 20px;">
+    <div class="download-hero">
+      <span class="section-subtitle">Para usuarios con android</span>
+      <h1 class="section-title" style="margin-bottom: 20px; font-size: 48px; line-height: 1.1;">Descargá la App Móvil</h1>
+      <p style="font-size: 18px; color: var(--muted); line-height: 1.7; margin-bottom: 35px;">
+        La aplicación se encuentra en **etapa de testing interno**, pero podés descargarla y probarla de forma segura. **¡Podés utilizarla gratis por 3 días!** para evaluar si cumple con tus necesidades.
+      </p>
+      
+      <a href="https://play.google.com/apps/internaltest/4700614010368069832" target="_blank" class="play-badge">
+        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es_badge_web_generic.png" alt="Disponible en Google Play" style="height: 75px;">
+      </a>
+      <span style="display: block; margin-top: 15px; font-size: 14px; font-weight: 700; color: var(--accent);">¡Etapa de Testing en Google Play!</span>
+    </div>
+  </section>
+
+  <!-- REQUISITOS DEL SISTEMA -->
+  <section class="section-padding reveal active" style="padding-top: 20px; padding-bottom: 40px;">
+    <span class="section-subtitle" style="text-align:center;">Compatibilidad</span>
+    <h2 class="section-title" style="text-align:center;">Requisitos del Sistema</h2>
+    
+    <div class="requirements-grid">
+      <!-- Requisito 1 -->
+      <div class="requirement-card">
+        <div class="requirement-title">Sistema Operativo</div>
+        <div class="requirement-value">Android 8.0 o superior</div>
+      </div>
+      <!-- Requisito 2 -->
+      <div class="requirement-card">
+        <div class="requirement-title">Tamaño de Archivo</div>
+        <div class="requirement-value">Menos de 15 MB</div>
+      </div>
+      <!-- Requisito 3 -->
+      <div class="requirement-card">
+        <div class="requirement-title">Permisos Clave</div>
+        <div class="requirement-value">Sólo Notificaciones</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUÍA DE ACCESO GOOGLE PLAY TESTING -->
+  <section class="section-padding reveal active" style="padding-top: 40px; padding-bottom: 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(27,58,107,0.01);">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <span class="section-subtitle" style="text-align:center;">Instrucciones</span>
+      <h2 class="section-title" style="text-align:center;">¿Cómo unirse al programa de pruebas?</h2>
+      
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">1</div>
+          <div>
+            <h4 style="font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 4px;">Ingresá al enlace de pruebas</h4>
+            <p style="color: var(--muted); font-size: 14px; line-height: 1.6;">Hacé clic en el badge de descarga de Google Play de arriba o solicita el enlace de prueba directa al administrador por WhatsApp.</p>
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">2</div>
+          <div>
+            <h4 style="font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 4px;">Convertite en Tester</h4>
+            <p style="color: var(--muted); font-size: 14px; line-height: 1.6;">En la ventana del navegador que se abrirá, presioná el botón **"Convertirse en tester"** (deberás tener iniciada tu sesión de Gmail en tu navegador).</p>
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">3</div>
+          <div>
+            <h4 style="font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 4px;">Descargá en Play Store</h4>
+            <p style="color: var(--muted); font-size: 14px; line-height: 1.6;">Una vez registrado, aparecerá la opción de descargar la app desde Google Play en tu teléfono. A partir de allí, recibirás actualizaciones oficiales automáticas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOCKUPS DE LA APP (SCREENS) -->
+  <section class="section-padding app-screenshots-section reveal active">
+    <span class="section-subtitle" style="text-align:center;">Vistazo a la App</span>
+    <h2 class="section-title" style="text-align:center;">¿Cómo se ve por dentro?</h2>
+    
+    <div class="screenshot-grid">
+      <!-- Screen 1: Simulador -->
+      <div class="phone-mockup-css">
+        <div class="phone-header-css">MÓDULO 1 · ESTUDIO</div>
+        <div class="phone-content-css">
+          <div style="display: flex; justify-content: space-between; font-weight: 800; color: var(--accent-light); font-size: 11px;">
+            <span>Pregunta 14 de 30</span>
+            <span>Tiempo: 28:15</span>
+          </div>
+          <div class="mock-question">
+            Con respecto a la Ley 12.521 (Personal Policial), ¿cuál de los siguientes es un deber del personal en actividad?
+          </div>
+          <div class="mock-option">
+            A) Ejercer facultades de mando ajenas a su función jerárquica.
+          </div>
+          <div class="mock-option correct">
+            B) Mantener el secreto policial de los asuntos del servicio que por su naturaleza lo exijan. (Justificación: Art. 12, inc. d)
+          </div>
+          <div class="mock-option">
+            C) Realizar actividades políticas de manera abierta durante horas de servicio.
+          </div>
+          <div style="background: var(--green); padding: 8px; border-radius: 8px; text-align: center; font-weight: 800; font-size: 11px;">
+            ¡EXPLICACIÓN CORRECTA! ✓
+          </div>
+        </div>
+      </div>
+      
+      <!-- Screen 2: Adicionales -->
+      <div class="phone-mockup-css">
+        <div class="phone-header-css">MÓDULO 2 · CONTROL</div>
+        <div class="phone-content-css">
+          <div style="background: rgba(255,255,255,0.07); border-radius: 16px; padding: 15px; text-align: center;">
+            <div style="font-size: 11px; color: #94A3B8; text-transform: uppercase; font-weight: 800;">Total Acumulado Junio</div>
+            <div style="font-size: 28px; font-weight: 900; color: var(--green); margin-top: 4px;">$216.400</div>
+            <div style="font-size: 10px; color: #94A3B8; margin-top: 4px;">86 Horas Adicionales Realizadas</div>
+          </div>
+          
+          <div style="font-weight: 800; font-size: 12px; color: var(--accent-light); margin-top: 5px;">Últimos Servicios Cargados:</div>
+          
+          <div class="mock-service-card">
+            <div>
+              <div class="mock-service-title">Banco Santa Fe (Suc. Centro)</div>
+              <div class="mock-service-hours">10 de Junio · 8 Horas</div>
+            </div>
+            <div class="mock-service-price">$24.000</div>
+          </div>
+          
+          <div class="mock-service-card">
+            <div>
+              <div class="mock-service-title">Custodia Evento Deportivo</div>
+              <div class="mock-service-hours">8 de Junio · 12 Horas</div>
+            </div>
+            <div class="mock-service-price">$36.000</div>
+          </div>
+          
+          <div class="mock-service-card">
+            <div>
+              <div class="mock-service-title">Seguridad Sanatorio Privado</div>
+              <div class="mock-service-hours">5 de Junio · 6 Horas</div>
+            </div>
+            <div class="mock-service-price">$18.000</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Screen 3: Relevos -->
+      <div class="phone-mockup-css">
+        <div class="phone-header-css">MÓDULO 3 · RELEVOS</div>
+        <div class="phone-content-css">
+          <div style="text-align: center; font-size: 11px; color: #94A3B8; margin-bottom: 5px;">Servicios Activos que Buscan Relevo:</div>
+          
+          <div class="mock-relevo-card">
+            <span class="mock-relevo-badge">Rosario (Centro)</span>
+            <div style="font-weight: 800; font-size: 12px; margin-bottom: 4px;">Servicio 8hs - Supermercado</div>
+            <div style="color: #94A3B8; font-size: 11px;">Fecha: 15/06 - Turno Tarde</div>
+            <div style="color: #94A3B8; font-size: 11px; margin-bottom: 8px;">Contacto: Of. Inspector Gómez</div>
+            <div style="background: #25D366; text-align: center; padding: 6px; border-radius: 8px; font-weight: 800; font-size: 11px; color: white; cursor: pointer;">
+              Enviar WhatsApp 💬
+            </div>
+          </div>
+          
+          <div class="mock-relevo-card">
+            <span class="mock-relevo-badge" style="background: rgba(44,95,160,0.2); color: #60A5FA;">Santa Fe (Norte)</span>
+            <div style="font-weight: 800; font-size: 12px; margin-bottom: 4px;">Servicio 6hs - Entidad Bancaria</div>
+            <div style="color: #94A3B8; font-size: 11px;">Fecha: 18/06 - Turno Mañana</div>
+            <div style="color: #94A3B8; font-size: 11px; margin-bottom: 8px;">Contacto: Subofi. Martínez</div>
+            <div style="background: #25D366; text-align: center; padding: 6px; border-radius: 8px; font-weight: 800; font-size: 11px; color: white; cursor: pointer;">
+              Enviar WhatsApp 💬
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="margin-bottom: 24px;">
+      <a href="../">Inicio</a>
+      <a href="../como-funciona/">Cómo funciona</a>
+      <a href="../nosotros/">Nosotros</a>
+      <a href="../comprar/">Comprar</a>
+      <a href="./">Descarga</a>
+      <a href="../contacto/">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </div>
+    <p>© 2026 DON VIGI · Herramienta Policial No Oficial. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- FAB WA -->
+  <a href="https://wa.me/5493417190648?text=Necesito%20ayuda%2C%20contactame%20con%20el%20Soporte" target="_blank" class="fab-wa" title="Soporte Directo">
+    <svg viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.4 0 12.031c0 2.63.829 5.088 2.298 7.15L.306 24l5.06-1.99a11.967 11.967 0 006.665 2.012c6.633 0 12.031-5.401 12.031-12.032C24.062 5.4 18.664 0 12.031 0zm0 21.996a9.92 9.92 0 01-5.074-1.39l-.364-.216-3.766 1.482 1.006-3.668-.237-.377a9.945 9.945 0 01-1.52-5.28c0-5.495 4.475-9.969 9.97-9.969 5.494 0 9.968 4.474 9.968 9.969 0 5.496-4.474 9.969-9.968 9.969zm5.485-7.464c-.301-.151-1.78-.88-2.057-.98-.276-.1-.478-.151-.679.15-.202.302-.778.98-.954 1.18-.176.202-.351.227-.653.076-.301-.15-1.272-.469-2.422-1.495-.895-.799-1.5-1.785-1.676-2.086-.176-.301-.019-.464.131-.615.136-.135.302-.351.453-.527.151-.176.201-.302.302-.503.1-.202.05-.378-.025-.528-.076-.151-.679-1.637-.929-2.242-.244-.59-.492-.51-.679-.52-.176-.008-.377-.01-.578-.01-.202 0-.528.076-.804.378-.276.302-1.055 1.03-1.055 2.513 0 1.483 1.08 2.917 1.231 3.118.151.202 2.125 3.245 5.148 4.549.719.31 1.28.496 1.718.635.723.23 1.381.198 1.899.12.579-.086 1.78-.728 2.03-1.433.252-.705.252-1.309.176-1.434-.075-.126-.276-.202-.578-.352z"/></svg>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Simple scroll animation activator
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      });
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

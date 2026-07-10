@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Nosotros · DON VIGI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  
+  <style>
+    /* Estilos específicos para Valores y Seguridad */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .value-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .value-card:hover {
+      transform: translateY(-10px);
+      background: #FFFFFF;
+      box-shadow: 0 20px 45px rgba(27,58,107,0.06);
+    }
+    .value-icon {
+      font-size: 40px;
+      margin-bottom: 20px;
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      background: rgba(27,58,107,0.05);
+      border-radius: 50%;
+      color: var(--primary);
+    }
+    .value-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 15px;
+      letter-spacing: -0.5px;
+    }
+    .value-card p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    
+    .security-section {
+      background: linear-gradient(135deg, rgba(27,58,107,0.02), rgba(212,137,10,0.02));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    @media (max-width: 1024px) {
+      .values-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .value-card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="../" class="logo" style="display: flex; align-items: center; gap: 10px;">
+      <img src="../assets/images/logo.jpg" alt="DON VIGI" style="height: 48px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+      DON <span>VIGI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../">Inicio</a>
+      <a href="../como-funciona/">Cómo funciona</a>
+      <a href="./" style="color: var(--primary);">Nosotros</a>
+      <a href="../comprar/">Comprar</a>
+      <a href="../descarga/">Descarga</a>
+      <a href="../contacto/">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </nav>
+    <div class="header-actions">
+      <a href="../app/" class="btn-login btn-login-special">
+        <span class="desktop-text">APP VERSIÓN WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+        <span class="mobile-text" style="display:none;">APP WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+      </a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
+    </div>
+  </header>
+
+  <!-- SECCIÓN SOBRE NOSOTROS -->
+  <section class="section-padding reveal active" style="padding-top: 40px;">
+    <div class="about-grid">
+      <div class="about-img reveal active delay-1">
+        <img src="../assets/images/nuestra_mision.png" alt="Nuestra Misión" class="about-img-file">
+      </div>
+      <div class="about-text reveal active delay-2">
+        <span class="section-subtitle">Nuestra Misión</span>
+        <h2 class="section-title" style="margin-bottom:20px;">Hecho por y para profesionales</h2>
+        <p>Entendemos que el tiempo es oro y que la preparación para los concursos de ascenso, sumado a las responsabilidades operativas diarias de la fuerza, requiere herramientas extremadamente eficientes.</p>
+        <p>DON VIGI nace de la necesidad real de organizar las horas de servicio, llevar un control financiero exacto de los adicionales y del calendario de guardias, combinándolo con un simulador de estudio robusto en un solo lugar.</p>
+        <ul class="check-list">
+          <li>Plataforma independiente y enfocada al 100% en el usuario.</li>
+          <li>Actualizaciones constantes del material de estudio según temarios vigentes.</li>
+          <li>Soporte técnico directo ante cualquier consulta.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUESTROS VALORES -->
+  <section class="section-padding reveal active" style="padding-top: 20px;">
+    <span class="section-subtitle" style="text-align:center;">Pilares Fundamentales</span>
+    <h2 class="section-title" style="text-align:center;">Nuestros Valores</h2>
+    
+    <div class="values-grid">
+      <!-- Valor 1 -->
+      <div class="value-card">
+        <div class="value-icon">🛡️</div>
+        <h3>Confidencialidad</h3>
+        <p>Tu privacidad es sagrada. Toda la información que cargas sobre tus servicios adicionales y guardias es almacenada de forma estrictamente privada y local.</p>
+      </div>
+      
+      <!-- Valor 2 -->
+      <div class="value-card">
+        <div class="value-icon">⚡</div>
+        <h3>Eficiencia</h3>
+        <p>Optimizamos tu preparación. Las preguntas del preguntero van al grano, con explicaciones directas para que no pierdas tiempo en teoría innecesaria.</p>
+      </div>
+      
+      <!-- Valor 3 -->
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3>Soporte Directo</h3>
+        <p>Estamos con vos en cada paso. Si tenés problemas con tu código de acceso o el uso de la app, te atendemos directamente sin intermediarios por WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEGURIDAD Y PRIVACIDAD DE DATOS -->
+  <section class="section-padding security-section reveal active" style="padding-top: 60px; padding-bottom: 60px;">
+    <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+      <span class="section-subtitle">Privacidad en Primer Lugar</span>
+      <h2 class="section-title" style="margin-bottom: 30px;">¿Cómo protegemos tus datos?</h2>
+      
+      <div class="cards-wrapper" style="margin: 0 auto; padding: 0;">
+        <div class="cards-container" style="grid-template-columns: repeat(2, 1fr); text-align: left;">
+          
+          <div class="info-card reveal active delay-1" style="background: white;">
+            <div class="ic-icon" style="color: var(--primary); background: rgba(27,58,107,0.05);">💾</div>
+            <div class="ic-text">
+              <h4>Almacenamiento Local (SQLite)</h4>
+              <p>En la versión App Android, todas tus guardias, adicionales, ingresos calculados y progresos de estudio se guardan únicamente dentro de la base de datos de tu propio teléfono móvil. No se envían a ningún servidor externo sin tu consentimiento.</p>
+            </div>
+          </div>
+          
+          <div class="info-card reveal active delay-2" style="background: white;">
+            <div class="ic-icon" style="color: var(--accent); background: rgba(212,137,10,0.05);">☁️</div>
+            <div class="ic-text">
+              <h4>Respaldo Voluntario En La Nube</h4>
+              <p>Para evitar que pierdas tus datos al cambiar de celular, incorporamos un respaldo cifrado opcional. Vos generás un código de respaldo único (formato VIGI-XXXX-XXXX) y solo vos podés restaurar la información en otro dispositivo.</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <p style="margin-top: 40px; color: var(--muted); font-size: 16px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.7;">
+        DON VIGI es una herramienta independiente y **no oficial**. No recopilamos información personal sensible. Para más detalles, te sugerimos leer nuestra completa <a href="../privacidad/" style="color: var(--primary); font-weight: 700; text-decoration: none;">Política de Privacidad</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="margin-bottom: 24px;">
+      <a href="../">Inicio</a>
+      <a href="../como-funciona/">Cómo funciona</a>
+      <a href="./">Nosotros</a>
+      <a href="../comprar/">Comprar</a>
+      <a href="../descarga/">Descarga</a>
+      <a href="../contacto/">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </div>
+    <p>© 2026 DON VIGI · Herramienta Policial No Oficial. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- FAB WA -->
+  <a href="https://wa.me/5493417190648?text=Necesito%20ayuda%2C%20contactame%20con%20el%20Soporte" target="_blank" class="fab-wa" title="Soporte Directo">
+    <svg viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.4 0 12.031c0 2.63.829 5.088 2.298 7.15L.306 24l5.06-1.99a11.967 11.967 0 006.665 2.012c6.633 0 12.031-5.401 12.031-12.032C24.062 5.4 18.664 0 12.031 0zm0 21.996a9.92 9.92 0 01-5.074-1.39l-.364-.216-3.766 1.482 1.006-3.668-.237-.377a9.945 9.945 0 01-1.52-5.28c0-5.495 4.475-9.969 9.97-9.969 5.494 0 9.968 4.474 9.968 9.969 0 5.496-4.474 9.969-9.968 9.969zm5.485-7.464c-.301-.151-1.78-.88-2.057-.98-.276-.1-.478-.151-.679.15-.202.302-.778.98-.954 1.18-.176.202-.351.227-.653.076-.301-.15-1.272-.469-2.422-1.495-.895-.799-1.5-1.785-1.676-2.086-.176-.301-.019-.464.131-.615.136-.135.302-.351.453-.527.151-.176.201-.302.302-.503.1-.202.05-.378-.025-.528-.076-.151-.679-1.637-.929-2.242-.244-.59-.492-.51-.679-.52-.176-.008-.377-.01-.578-.01-.202 0-.528.076-.804.378-.276.302-1.055 1.03-1.055 2.513 0 1.483 1.08 2.917 1.231 3.118.151.202 2.125 3.245 5.148 4.549.719.31 1.28.496 1.718.635.723.23 1.381.198 1.899.12.579-.086 1.78-.728 2.03-1.433.252-.705.252-1.309.176-1.434-.075-.126-.276-.202-.578-.352z"/></svg>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Simple scroll animation activator
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      });
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

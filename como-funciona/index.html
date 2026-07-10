@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Cómo funciona · DON VIGI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  
+  <style>
+    /* Estilos específicos de FAQs */
+    .faq-section {
+      max-width: 900px;
+      margin: 60px auto 0;
+      padding: 0 20px;
+    }
+    .faq-item {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 10px rgba(27,58,107,0.02);
+    }
+    .faq-item:hover {
+      box-shadow: 0 15px 30px rgba(27,58,107,0.06);
+      background: #FFFFFF;
+      transform: translateY(-2px);
+    }
+    .faq-toggle {
+      display: none;
+    }
+    .faq-question {
+      padding: 24px 30px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .faq-question::after {
+      content: '+';
+      font-size: 24px;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+      font-weight: 400;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 30px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .faq-toggle:checked ~ .faq-answer {
+      max-height: 300px;
+      padding-bottom: 24px;
+    }
+    .faq-toggle:checked ~ .faq-question::after {
+      transform: rotate(45deg);
+    }
+    
+    @media (max-width: 768px) {
+      .faq-question {
+        padding: 20px;
+        font-size: 16px;
+      }
+      .faq-answer {
+        padding: 0 20px;
+        font-size: 14px;
+      }
+      .faq-toggle:checked ~ .faq-answer {
+        padding-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="../" class="logo" style="display: flex; align-items: center; gap: 10px;">
+      <img src="../assets/images/logo.jpg" alt="DON VIGI" style="height: 48px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+      DON <span>VIGI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../">Inicio</a>
+      <a href="./" style="color: var(--primary);">Cómo funciona</a>
+      <a href="../nosotros/">Nosotros</a>
+      <a href="../comprar/">Comprar</a>
+      <a href="../descarga/">Descarga</a>
+      <a href="../contacto/">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </nav>
+    <div class="header-actions">
+      <a href="../app/" class="btn-login btn-login-special">
+        <span class="desktop-text">APP VERSIÓN WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+        <span class="mobile-text" style="display:none;">APP WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+      </a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
+    </div>
+  </header>
+
+  <!-- EXPLICACIÓN PASO A PASO -->
+  <section class="section-padding reveal active" style="padding-top: 40px;">
+    <span class="section-subtitle" style="text-align:center;">Paso a Paso</span>
+    <h2 class="section-title" style="text-align:center;">¿Cómo activar tu acceso?</h2>
+    
+    <div class="cards-wrapper" style="margin: 0 auto; padding: 0;">
+      <div class="cards-container">
+        <div class="info-card reveal active delay-1">
+          <div class="ic-icon">1️⃣</div>
+          <div class="ic-text">
+            <h4>Adquirí tu licencia</h4>
+            <p>Hacé clic en el botón de compra en la sección correspondiente y comunicate con nosotros vía WhatsApp para solicitar tu acceso rápido.</p>
+          </div>
+        </div>
+        <div class="info-card reveal active delay-2">
+          <div class="ic-icon" style="color: var(--accent); background: rgba(212,137,10,0.1);">2️⃣</div>
+          <div class="ic-text">
+            <h4>Recibí tu código</h4>
+            <p>Una vez completado el pago, te enviaremos un código de acceso único, personal e intransferible en cuestión de minutos.</p>
+          </div>
+        </div>
+        <div class="info-card reveal active delay-3">
+          <div class="ic-icon">3️⃣</div>
+          <div class="ic-text">
+            <h4>Iniciá sesión</h4>
+            <p>Ingresá el código recibido en la plataforma (Versión Web o App Android), validá tu cuenta y empezá a usar todos los módulos al instante.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUÍA DE ESTUDIO PREMIUM -->
+  <section class="section-padding reveal active" style="padding-top: 20px; background: rgba(255,255,255,0.4); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="about-grid">
+      <div class="about-text" style="max-width: 600px; margin: 0 auto;">
+        <span class="section-subtitle">Aprovechá la Plataforma</span>
+        <h2 class="section-title" style="margin-bottom: 25px; font-size: 36px;">¿Cómo estudiar de forma eficiente?</h2>
+        <p>DON VIGI está diseñado bajo un modelo de repetición espaciada y simulacros realistas para optimizar tu tiempo de estudio:</p>
+        <ul class="check-list" style="margin-top: 20px;">
+          <li><strong>Simulacros por Jerarquías:</strong> Seleccioná tu jerarquía actual para responder preguntas alineadas exactamente al temario oficial del concurso de ascenso.</li>
+          <li><strong>Modo Práctica con Respuestas Al Instante:</strong> Descubrí inmediatamente si tu respuesta es correcta y leé la justificación legal basada en los manuales de la Policía de Santa Fe.</li>
+          <li><strong>Simulación con Tiempo:</strong> Poné a prueba tus conocimientos en un simulacro cronometrado similar al examen oficial para controlar tus nervios y administrar el tiempo de respuesta.</li>
+        </ul>
+      </div>
+      <div class="about-img">
+        <img src="../assets/images/nuestra_mision.png" alt="Guía de estudio" class="about-img-file" style="max-width: 500px; margin: 0 auto;">
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN FAQs -->
+  <section class="section-padding reveal active" style="padding-top: 60px;">
+    <span class="section-subtitle" style="text-align:center;">Respuestas Rápidas</span>
+    <h2 class="section-title" style="text-align:center;">Preguntas Frecuentes</h2>
+    
+    <div class="faq-section">
+      <!-- FAQ 1 -->
+      <div class="faq-item">
+        <input type="checkbox" id="faq-1" class="faq-toggle">
+        <label for="faq-1" class="faq-question">¿Qué dispositivos son compatibles con DON VIGI?</label>
+        <div class="faq-answer">
+          <p>La versión App de DON VIGI está disponible para dispositivos móviles Android (versión 8.0 o superior). La versión Web del preguntero es totalmente compatible con cualquier dispositivo con navegador de internet moderno, incluyendo iPhones, iPads, computadoras (Windows/Mac) y tablets.</p>
+        </div>
+      </div>
+      
+      <!-- FAQ 2 -->
+      <div class="faq-item">
+        <input type="checkbox" id="faq-2" class="faq-toggle">
+        <label for="faq-2" class="faq-question">¿El pago es mensual o por única vez?</label>
+        <div class="faq-answer">
+          <p>Es un pago único de licencia. Al adquirir tu acceso, no tendrás cargos mensuales ni costos ocultos. El acceso a las preguntas de estudio del Módulo 1 tiene una validez de 12 meses (tiempo ideal para preparar tu concurso), mientras que los módulos de organización de servicios y guardias de la app no tienen vencimiento.</p>
+        </div>
+      </div>
+      
+      <!-- FAQ 3 -->
+      <div class="faq-item">
+        <input type="checkbox" id="faq-3" class="faq-toggle">
+        <label for="faq-3" class="faq-question">¿Cómo recibo mi código de acceso tras comprar?</label>
+        <div class="faq-answer">
+          <p>Una vez completado el pago por los medios provistos por WhatsApp, envías tu comprobante al soporte. Verificamos la transacción y te enviaremos el código alfanumérico de acceso único en cuestión de minutos para que comiences de inmediato.</p>
+        </div>
+      </div>
+      
+      <!-- FAQ 4 -->
+      <div class="faq-item">
+        <input type="checkbox" id="faq-4" class="faq-toggle">
+        <label for="faq-4" class="faq-question">¿Puedo usar el mismo código en varios dispositivos?</label>
+        <div class="faq-answer">
+          <p>No. Para garantizar la seguridad del material, cada código se asocia al identificador único de tu dispositivo (en la App Android) o a un token de sesión exclusivo (en la versión Web). Intentar usar el código en múltiples dispositivos de forma simultánea puede provocar el bloqueo preventivo del acceso.</p>
+        </div>
+      </div>
+      
+      <!-- FAQ 5 -->
+      <div class="faq-item">
+        <input type="checkbox" id="faq-5" class="faq-toggle">
+        <label for="faq-5" class="faq-question">¿Qué pasa si mi código web no es reconocido al reingresar?</label>
+        <div class="faq-answer">
+          <p>Si cambias de dispositivo, limpias las cookies de tu navegador o ingresas desde navegación incógnita, el sistema web podría alertar que el código "está en uso". Para solucionarlo, ve a la sección de **Contacto** en esta web, coloca tu código en el recuadro **"Liberar Código Web"** y presiónalo. Tu código se restablecerá al instante de manera gratuita.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="margin-bottom: 24px;">
+      <a href="../">Inicio</a>
+      <a href="./">Cómo funciona</a>
+      <a href="../nosotros/">Nosotros</a>
+      <a href="../comprar/">Comprar</a>
+      <a href="../descarga/">Descarga</a>
+      <a href="../contacto/">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </div>
+    <p>© 2026 DON VIGI · Herramienta Policial No Oficial. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- FAB WA -->
+  <a href="https://wa.me/5493417190648?text=Necesito%20ayuda%2C%20contactame%20con%20el%20Soporte" target="_blank" class="fab-wa" title="Soporte Directo">
+    <svg viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.4 0 12.031c0 2.63.829 5.088 2.298 7.15L.306 24l5.06-1.99a11.967 11.967 0 006.665 2.012c6.633 0 12.031-5.401 12.031-12.032C24.062 5.4 18.664 0 12.031 0zm0 21.996a9.92 9.92 0 01-5.074-1.39l-.364-.216-3.766 1.482 1.006-3.668-.237-.377a9.945 9.945 0 01-1.52-5.28c0-5.495 4.475-9.969 9.97-9.969 5.494 0 9.968 4.474 9.968 9.969 0 5.496-4.474 9.969-9.968 9.969zm5.485-7.464c-.301-.151-1.78-.88-2.057-.98-.276-.1-.478-.151-.679.15-.202.302-.778.98-.954 1.18-.176.202-.351.227-.653.076-.301-.15-1.272-.469-2.422-1.495-.895-.799-1.5-1.785-1.676-2.086-.176-.301-.019-.464.131-.615.136-.135.302-.351.453-.527.151-.176.201-.302.302-.503.1-.202.05-.378-.025-.528-.076-.151-.679-1.637-.929-2.242-.244-.59-.492-.51-.679-.52-.176-.008-.377-.01-.578-.01-.202 0-.528.076-.804.378-.276.302-1.055 1.03-1.055 2.513 0 1.483 1.08 2.917 1.231 3.118.151.202 2.125 3.245 5.148 4.549.719.31 1.28.496 1.718.635.723.23 1.381.198 1.899.12.579-.086 1.78-.728 2.03-1.433.252-.705.252-1.309.176-1.434-.075-.126-.276-.202-.578-.352z"/></svg>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Simple scroll animation activator
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      });
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

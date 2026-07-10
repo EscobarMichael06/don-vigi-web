@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Comprar Acceso · DON VIGI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  
+  <style>
+    /* Estilos específicos de la tabla comparativa */
+    .comparison-section {
+      padding-top: 40px;
+    }
+    .comparison-table-wrapper {
+      margin: 40px auto 0;
+      max-width: 950px;
+      overflow-x: auto;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 40px rgba(27,58,107,0.04);
+      background: white;
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      min-width: 700px;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .comparison-table th {
+      background: var(--primary);
+      color: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    .comparison-table td {
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 500;
+      vertical-align: middle;
+    }
+    .comparison-table td:first-child {
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .comparison-table .feature-desc {
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--muted);
+      display: block;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .comparison-table .check-icon {
+      color: var(--green);
+      font-weight: 900;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .comparison-table .cross-icon {
+      color: #EF4444;
+      font-weight: 900;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .pricing-details {
+      max-width: 900px;
+      margin: 50px auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .detail-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 35px;
+    }
+    .detail-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .detail-card p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+      .pricing-details {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 30px;
+      }
+      .detail-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="../" class="logo" style="display: flex; align-items: center; gap: 10px;">
+      <img src="../assets/images/logo.jpg" alt="DON VIGI" style="height: 48px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+      DON <span>VIGI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../">Inicio</a>
+      <a href="../como-funciona/">Cómo funciona</a>
+      <a href="../nosotros/">Nosotros</a>
+      <a href="./" style="color: var(--primary);">Comprar</a>
+      <a href="../descarga/">Descarga</a>
+      <a href="../contacto/">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </nav>
+    <div class="header-actions">
+      <a href="../app/" class="btn-login btn-login-special">
+        <span class="desktop-text">APP VERSIÓN WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+        <span class="mobile-text" style="display:none;">APP WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+      </a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
+    </div>
+  </header>
+
+  <!-- SECCIÓN PRECIO -->
+  <section class="section-padding reveal active" style="padding-top: 40px; padding-bottom: 20px;">
+    <div class="price-wrap">
+      <div class="price-info reveal active delay-1">
+        <span class="section-subtitle">Adquirí tu licencia</span>
+        <h2>Todo tu servicio en un solo lugar</h2>
+        <p>Con un único pago obtenés acceso completo. Elegí la licencia que mejor se adapte a tus necesidades. Comunicate directo por WhatsApp para activar tu código hoy mismo.</p>
+      </div>
+      <div class="price-box reveal active delay-2">
+        <div class="amount">$3000</div>
+        <div class="period">Pago Único</div>
+        <a href="https://wa.me/5493417190648?text=Hola%2C%20quiero%20comprar%20mi%20acceso%20a%20DON%20VIGI" target="_blank" class="btn-buy">Comprar Acceso por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLA COMPARATIVA -->
+  <section class="section-padding comparison-section reveal active">
+    <span class="section-subtitle" style="text-align:center;">Comparación de Versiones</span>
+    <h2 class="section-title" style="text-align:center;">Elegí tu manera de estudiar y organizarte</h2>
+    
+    <div class="comparison-table-wrapper">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th style="width: 40%;">Característica</th>
+            <th style="width: 30%; text-align: center;">Versión Web (Preguntero)</th>
+            <th style="width: 30%; text-align: center;">Versión App Android (Full)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Preguntas de Estudio
+              <span class="feature-desc">Banco de más de 1000 preguntas actualizadas del ISEP.</span>
+            </td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+          </tr>
+          <tr>
+            <td>
+              Preguntas por Jerarquías
+              <span class="feature-desc">Contenidos filtrados por la jerarquía a la que aspirás.</span>
+            </td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+          </tr>
+          <tr>
+            <td>
+              Simulador con Tiempo
+              <span class="feature-desc">Exámenes con cronómetro para practicar el ritmo real de evaluación.</span>
+            </td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+          </tr>
+          <tr>
+            <td>
+              Justificaciones Legales
+              <span class="feature-desc">Respaldo legal y normativo detallado para cada respuesta correcta.</span>
+            </td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+          </tr>
+          <tr>
+            <td>
+              Control de Horas y Servicios
+              <span class="feature-desc">Registro y cálculo automático del pago por adicionales y guardias.</span>
+            </td>
+            <td style="text-align: center;"><span class="cross-icon">❌</span></td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+          </tr>
+          <tr>
+            <td>
+              Calendario de Guardias y Turnos
+              <span class="feature-desc">Vista en calendario con alertas, excepciones y visualización de relevos.</span>
+            </td>
+            <td style="text-align: center;"><span class="cross-icon">❌</span></td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+          </tr>
+          <tr>
+            <td>
+              Respaldo en la Nube Cifrado
+              <span class="feature-desc">Copia de seguridad manual para no perder datos si cambiás de celular.</span>
+            </td>
+            <td style="text-align: center;"><span class="cross-icon">❌</span></td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+          </tr>
+          <tr>
+            <td>
+              Publicación de Relevos
+              <span class="feature-desc">Publicar anuncios de servicios para coordinar con otros policías.</span>
+            </td>
+            <td style="text-align: center;"><span class="cross-icon">❌</span></td>
+            <td style="text-align: center;"><span class="check-icon">✓</span></td>
+          </tr>
+          <tr>
+            <td>
+              Compatibilidad de Dispositivos
+              <span class="feature-desc">Soporte multiplataforma e instalación.</span>
+            </td>
+            <td style="text-align: center; font-weight: 600; color: var(--text);">Todos (iPhone, PC, Android)</td>
+            <td style="text-align: center; font-weight: 600; color: var(--text);">Solo Celulares Android</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DETALLES DE COMPRA ADICIONALES -->
+  <section class="section-padding reveal active" style="padding-top: 20px;">
+    <div class="pricing-details">
+      <!-- Tarjeta 1 -->
+      <div class="detail-card">
+        <h3>Garantía de Activación</h3>
+        <p>Tu compra está totalmente garantizada. Si tienes problemas técnicos al activar tu código en las primeras 72 horas y nuestro soporte no logra resolverlo, te devolvemos el total de tu dinero o emitimos una licencia de reemplazo sin costo adicional.</p>
+      </div>
+      
+      <!-- Tarjeta 2 -->
+      <div class="detail-card">
+        <h3>Vigencia de las Licencias</h3>
+        <p>El Módulo de Estudio (Banco de Preguntas para el Concurso de Ascenso) es válido por 12 meses consecutivos a partir del día de su activación. Los módulos de gestión de turnos y adicionales dentro de la App Android no tienen vencimiento.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="margin-bottom: 24px;">
+      <a href="../">Inicio</a>
+      <a href="../como-funciona/">Cómo funciona</a>
+      <a href="../nosotros/">Nosotros</a>
+      <a href="./">Comprar</a>
+      <a href="../descarga/">Descarga</a>
+      <a href="../contacto/">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </div>
+    <p>© 2026 DON VIGI · Herramienta Policial No Oficial. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- FAB WA -->
+  <a href="https://wa.me/5493417190648?text=Necesito%20ayuda%2C%20contactame%20con%20el%20Soporte" target="_blank" class="fab-wa" title="Soporte Directo">
+    <svg viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.4 0 12.031c0 2.63.829 5.088 2.298 7.15L.306 24l5.06-1.99a11.967 11.967 0 006.665 2.012c6.633 0 12.031-5.401 12.031-12.032C24.062 5.4 18.664 0 12.031 0zm0 21.996a9.92 9.92 0 01-5.074-1.39l-.364-.216-3.766 1.482 1.006-3.668-.237-.377a9.945 9.945 0 01-1.52-5.28c0-5.495 4.475-9.969 9.97-9.969 5.494 0 9.968 4.474 9.968 9.969 0 5.496-4.474 9.969-9.968 9.969zm5.485-7.464c-.301-.151-1.78-.88-2.057-.98-.276-.1-.478-.151-.679.15-.202.302-.778.98-.954 1.18-.176.202-.351.227-.653.076-.301-.15-1.272-.469-2.422-1.495-.895-.799-1.5-1.785-1.676-2.086-.176-.301-.019-.464.131-.615.136-.135.302-.351.453-.527.151-.176.201-.302.302-.503.1-.202.05-.378-.025-.528-.076-.151-.679-1.637-.929-2.242-.244-.59-.492-.51-.679-.52-.176-.008-.377-.01-.578-.01-.202 0-.528.076-.804.378-.276.302-1.055 1.03-1.055 2.513 0 1.483 1.08 2.917 1.231 3.118.151.202 2.125 3.245 5.148 4.549.719.31 1.28.496 1.718.635.723.23 1.381.198 1.899.12.579-.086 1.78-.728 2.03-1.433.252-.705.252-1.309.176-1.434-.075-.126-.276-.202-.578-.352z"/></svg>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Simple scroll animation activator
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      });
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

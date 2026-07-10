@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Contacto y Soporte · DON VIGI</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  
+  <style>
+    /* Estilos específicos de Contacto */
+    .support-info-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      max-width: 900px;
+      margin: 40px auto 0;
+    }
+    .support-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px 25px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      box-shadow: 0 10px 25px rgba(27,58,107,0.02);
+    }
+    .support-icon {
+      font-size: 28px;
+      background: rgba(27,58,107,0.05);
+      width: 55px;
+      height: 55px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .support-card h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .support-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    
+    @media (max-width: 768px) {
+      .support-info-cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .support-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="../" class="logo" style="display: flex; align-items: center; gap: 10px;">
+      <img src="../assets/images/logo.jpg" alt="DON VIGI" style="height: 48px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+      DON <span>VIGI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../">Inicio</a>
+      <a href="../como-funciona/">Cómo funciona</a>
+      <a href="../nosotros/">Nosotros</a>
+      <a href="../comprar/">Comprar</a>
+      <a href="../descarga/">Descarga</a>
+      <a href="./" style="color: var(--primary);">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </nav>
+    <div class="header-actions">
+      <a href="../app/" class="btn-login btn-login-special">
+        <span class="desktop-text">APP VERSIÓN WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+        <span class="mobile-text" style="display:none;">APP WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
+      </a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
+    </div>
+  </header>
+
+  <!-- FORMULARIO & LIBERAR CÓDIGO -->
+  <section class="section-padding reveal active" style="padding-top: 40px; padding-bottom: 20px;">
+    <span class="section-subtitle" style="text-align:center;">Gestión y Soporte</span>
+    <h2 class="section-title" style="text-align:center;">¿Necesitás ayuda con la plataforma?</h2>
+    
+    <div class="bottom-grid" style="max-width: 1000px; margin: 0 auto;">
+      <!-- Reset Box (Firebase) -->
+      <div class="action-box reveal active delay-1" id="restablecer">
+        <h3>Liberar Código Web</h3>
+        <p>¿Iniciaste sesión y ahora no te reconoce el código? Ingresalo aquí para restablecerlo así podés volver a ingresar sin problemas en otro navegador o celular.</p>
+        
+        <input type="text" id="reset-input" class="reset-input" placeholder="XXXXXX" maxlength="8" autocomplete="off" spellcheck="false">
+        <button class="btn-action" id="btn-reset" onclick="restablecerCodigo()">Restablecer Mi Código</button>
+        <div id="reset-msg" class="reset-msg"></div>
+      </div>
+      
+      <!-- Contact Form Box -->
+      <div class="action-box reveal active delay-2">
+        <h3>Formulario de Contacto</h3>
+        <p>Escribinos directo a nuestro soporte y te responderemos a la brevedad posible a través de WhatsApp.</p>
+        
+        <form onsubmit="enviarContacto(event)">
+          <div class="form-group">
+            <input type="text" id="c-name" class="form-input" placeholder="Tu Nombre / Jerarquía" required>
+          </div>
+          <div class="form-group">
+            <textarea id="c-msg" class="form-input" rows="4" placeholder="¿En qué te podemos ayudar?" required></textarea>
+          </div>
+          <button type="submit" class="btn-action" style="background: var(--text);">Enviar Mensaje a Soporte</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARJETAS DE SOPORTE ADICIONALES -->
+  <section class="section-padding reveal active" style="padding-top: 20px;">
+    <span class="section-subtitle" style="text-align:center;">Canales Alternativos</span>
+    <h2 class="section-title" style="text-align:center; font-size: 32px; margin-bottom: 30px;">Otras Vías de Contacto</h2>
+    
+    <div class="support-info-cards">
+      <!-- Canal Correo -->
+      <div class="support-card">
+        <div class="support-icon">✉️</div>
+        <div>
+          <h4>Soporte por Correo</h4>
+          <p>Escribinos a <a href="mailto:soportedonvigi@gmail.com" style="color: var(--primary); font-weight: 700;">soportedonvigi@gmail.com</a> para reclamos administrativos, reemisiones de códigos por pérdida de celular o consultas generales.</p>
+        </div>
+      </div>
+      
+      <!-- Canal Horario -->
+      <div class="support-card">
+        <div class="support-icon">⏰</div>
+        <div>
+          <h4>Tiempos de Respuesta</h4>
+          <p>Nuestro equipo responde consultas de Lunes a Sábados de 08:00hs a 20:00hs. El tiempo estimado de respuesta por WhatsApp es menor a 2 horas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="margin-bottom: 24px;">
+      <a href="../">Inicio</a>
+      <a href="../como-funciona/">Cómo funciona</a>
+      <a href="../nosotros/">Nosotros</a>
+      <a href="../comprar/">Comprar</a>
+      <a href="../descarga/">Descarga</a>
+      <a href="./">Contacto</a>
+      <a href="../privacidad/">Privacidad</a>
+    </div>
+    <p>© 2026 DON VIGI · Herramienta Policial No Oficial. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- FAB WA -->
+  <a href="https://wa.me/5493417190648?text=Necesito%20ayuda%2C%20contactame%20con%20el%20Soporte" target="_blank" class="fab-wa" title="Soporte Directo">
+    <svg viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.4 0 12.031c0 2.63.829 5.088 2.298 7.15L.306 24l5.06-1.99a11.967 11.967 0 006.665 2.012c6.633 0 12.031-5.401 12.031-12.032C24.062 5.4 18.664 0 12.031 0zm0 21.996a9.92 9.92 0 01-5.074-1.39l-.364-.216-3.766 1.482 1.006-3.668-.237-.377a9.945 9.945 0 01-1.52-5.28c0-5.495 4.475-9.969 9.97-9.969 5.494 0 9.968 4.474 9.968 9.969 0 5.496-4.474 9.969-9.968 9.969zm5.485-7.464c-.301-.151-1.78-.88-2.057-.98-.276-.1-.478-.151-.679.15-.202.302-.778.98-.954 1.18-.176.202-.351.227-.653.076-.301-.15-1.272-.469-2.422-1.495-.895-.799-1.5-1.785-1.676-2.086-.176-.301-.019-.464.131-.615.136-.135.302-.351.453-.527.151-.176.201-.302.302-.503.1-.202.05-.378-.025-.528-.076-.151-.679-1.637-.929-2.242-.244-.59-.492-.51-.679-.52-.176-.008-.377-.01-.578-.01-.202 0-.528.076-.804.378-.276.302-1.055 1.03-1.055 2.513 0 1.483 1.08 2.917 1.231 3.118.151.202 2.125 3.245 5.148 4.549.719.31 1.28.496 1.718.635.723.23 1.381.198 1.899.12.579-.086 1.78-.728 2.03-1.433.252-.705.252-1.309.176-1.434-.075-.126-.276-.202-.578-.352z"/></svg>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Simple scroll animation activator
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      });
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+    });
+
+    // Contact Form to WhatsApp
+    function enviarContacto(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('c-name').value;
+      const msg = document.getElementById('c-msg').value;
+      const url = `https://wa.me/5493417190648?text=Hola%2C%20soy%20${encodeURIComponent(nombre)}.%20${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    // Configuración Firebase para restablecer código
+    firebase.initializeApp({
+      apiKey: "AIzaSyA5dwOVjY8gCwi1fMGWUdx-7sBRq0jDbgg",
+      authDomain: "microtrafico-pdi-d304c.firebaseapp.com",
+      databaseURL: "https://microtrafico-pdi-d304c-default-rtdb.firebaseio.com/",
+      projectId: "microtrafico-pdi-d304c",
+      storageBucket: "microtrafico-pdi-d304c.firebasestorage.app",
+      messagingSenderId: "631537020389",
+      appId: "1:631537020389:web:66f7edb29067a52cf2930c"
+    });
+    const fbDb = firebase.database();
+
+    async function restablecerCodigo() {
+      const input = document.getElementById('reset-input');
+      const codigo = input.value.trim().toUpperCase();
+      const btn = document.getElementById('btn-reset');
+      const msgEl = document.getElementById('reset-msg');
+
+      if(codigo.length < 6) {
+        msgEl.className = 'reset-msg error';
+        msgEl.textContent = 'Ingresá un código válido.';
+        msgEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Procesando...';
+      msgEl.style.display = 'none';
+
+      try {
+        const ref = fbDb.ref(`web_codigos/${codigo}`);
+        const snap = await ref.get();
+        
+        if (!snap.exists()) {
+          msgEl.className = 'reset-msg error';
+          msgEl.textContent = 'El código ingresado no existe en la base de datos.';
+          msgEl.style.display = 'block';
+        } else {
+          await ref.update({ usado: false, session_token: null });
+          localStorage.removeItem('ppolicial_acceso');
+          localStorage.removeItem('ppolicial_data');
+
+          msgEl.className = 'reset-msg success';
+          msgEl.textContent = '¡Código liberado con éxito! Ya podés iniciar sesión en otro dispositivo.';
+          msgEl.style.display = 'block';
+          input.value = '';
+        }
+      } catch (error) {
+        msgEl.className = 'reset-msg error';
+        msgEl.textContent = 'Error de conexión. Intentalo de nuevo.';
+        msgEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Restablecer Mi Código';
+      }
+    }
+  </script>
+</body>
+</html>
