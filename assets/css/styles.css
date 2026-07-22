@@ -426,3 +426,47 @@ footer a:hover { color: var(--primary); }
   .online-indicator { padding: 1px 4px; margin-left: 0; font-size: 9px; }
   .online-indicator .count-text { display: none; }
 }
+
+/* ── ANUNCIOS WEB DINÁMICOS ── */
+.web-ann-top {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 999999;
+  padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3); font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  animation: annSlideDown 0.4s ease-out;
+}
+.web-ann-toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999999; max-width: 400px; width: calc(100% - 48px);
+  padding: 18px; border-radius: 14px; display: flex; flex-direction: column; gap: 10px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.4); font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  animation: annSlideUp 0.4s ease-out; border: 1px solid rgba(255,255,255,0.15);
+}
+.web-ann-modal-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999999;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(5px); display: flex;
+  align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  animation: annFadeIn 0.3s ease-out;
+}
+.web-ann-modal-card {
+  max-width: 460px; width: 92%; padding: 28px; border-radius: 18px; text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.6); display: flex; flex-direction: column; gap: 14px;
+  animation: annZoomIn 0.3s ease-out; border: 1px solid rgba(255,255,255,0.2);
+}
+.web-ann-btn {
+  padding: 9px 18px; border-radius: 8px; font-weight: 800; text-decoration: none;
+  display: inline-block; font-size: 0.88rem; border: none; cursor: pointer; transition: transform 0.2s;
+}
+.web-ann-btn:hover { transform: translateY(-1px); }
+.web-ann-close {
+  background: rgba(0,0,0,0.2); color: currentColor; border: none; width: 28px; height: 28px;
+  border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.web-ann-close:hover { background: rgba(0,0,0,0.4); }
+.web-ann-timer {
+  font-size: 0.75rem; background: rgba(0,0,0,0.25); padding: 3px 9px; border-radius: 12px; opacity: 0.95; font-family: monospace;
+}
+@keyframes annSlideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+@keyframes annSlideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes annFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes annZoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+

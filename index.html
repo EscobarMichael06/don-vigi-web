@@ -333,12 +333,122 @@
       } catch (e) {}
     }
 
+    // Sistema de Anuncios Online en Tiempo Real desde Firebase
+    function escucharAnuncioOnline() {
+      const STORAGE_KEY = 'announcement_dismissed_v1';
+      let activeTimer = null;
+
+      fbDb.ref('estadisticas/online/anuncio_activo').on('value', (snapshot) => {
+        const data = snapshot.val();
+        let container = document.getElementById('web-announcement-container');
+        if (!container) {
+          container = document.createElement('div');
+          container.id = 'web-announcement-container';
+          document.body.prepend(container);
+        }
+
+        if (activeTimer) clearInterval(activeTimer);
+
+        if (!data || !data.active) {
+          container.innerHTML = '';
+          return;
+        }
+
+        const mode = data.displayFrequency || 'always';
+        if (mode === 'once_session' && sessionStorage.getItem(STORAGE_KEY)) {
+          container.innerHTML = '';
+          return;
+        }
+        if (mode === 'once_day') {
+          const dismissedTime = localStorage.getItem(STORAGE_KEY);
+          if (dismissedTime && (Date.now() - parseInt(dismissedTime)) < 86400000) {
+            container.innerHTML = '';
+            return;
+          }
+        }
+
+        let seconds = parseInt(data.durationSeconds) || 0;
+        const isTimerVisible = data.showTimer;
+        const timerBadgeHTML = (seconds > 0 && isTimerVisible) ? '<span class="web-ann-timer">⏱️ <b id="annSecCount">' + seconds + '</b>s</span>' : '';
+        const btnHTML = (data.buttonText && data.buttonText.trim() !== '') ? '<a href="' + (data.buttonUrl || '#') + '" class="web-ann-btn" style="background:' + (data.colors ? data.colors.buttonBg : '#fff') + '; color:' + (data.colors ? data.colors.buttonText : '#000') + ';">' + data.buttonText + '</a>' : '';
+
+        const bg = data.colors ? data.colors.bg : '#0284c7';
+        const txt = data.colors ? data.colors.text : '#ffffff';
+
+        let html = '';
+        if (data.style === 'banner-top') {
+          html = `<div class="web-ann-top" id="webAnnBox" style="background:${bg}; color:${txt};">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <span style="font-size:22px;">${data.icon || '📢'}</span>
+              <div>
+                <strong style="font-size:0.95rem;">${data.title}</strong> ${timerBadgeHTML}
+                <div style="font-size:0.85rem; opacity:0.9;">${data.message}</div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              ${btnHTML}
+              <button class="web-ann-close" onclick="closeWebAnnouncement('${mode}')">✕</button>
+            </div>
+          </div>`;
+        } else if (data.style === 'toast-bottom') {
+          html = `<div class="web-ann-toast" id="webAnnBox" style="background:${bg}; color:${txt};">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span>${data.icon || '📢'}</span> <strong>${data.title}</strong>
+              </div>
+              <button class="web-ann-close" onclick="closeWebAnnouncement('${mode}')">✕</button>
+            </div>
+            <p style="font-size:0.85rem; opacity:0.9;">${data.message}</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+              ${timerBadgeHTML}
+              ${btnHTML}
+            </div>
+          </div>`;
+        } else if (data.style === 'modal') {
+          html = `<div class="web-ann-modal-bg" id="webAnnBox">
+            <div class="web-ann-modal-card" style="background:${bg}; color:${txt};">
+              <div style="font-size:42px;">${data.icon || '📢'}</div>
+              <h3>${data.title}</h3>
+              <p style="font-size:0.9rem; opacity:0.9;">${data.message}</p>
+              ${seconds > 0 && isTimerVisible ? '<div>' + timerBadgeHTML + '</div>' : ''}
+              <div style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
+                ${btnHTML}
+                <button class="web-ann-btn" style="background:rgba(0,0,0,0.3); color:${txt};" onclick="closeWebAnnouncement('${mode}')">Cerrar</button>
+              </div>
+            </div>
+          </div>`;
+        }
+
+        container.innerHTML = html;
+
+        if (seconds > 0) {
+          activeTimer = setInterval(() => {
+            seconds--;
+            const countEl = document.getElementById('annSecCount');
+            if (countEl) countEl.innerText = seconds;
+            if (seconds <= 0) {
+              clearInterval(activeTimer);
+              window.closeWebAnnouncement(mode);
+            }
+          }, 1000);
+        }
+      });
+
+      window.closeWebAnnouncement = function(mode) {
+        const box = document.getElementById('webAnnBox');
+        if (box) box.remove();
+        if (mode === 'once_session') sessionStorage.getItem(STORAGE_KEY, 'true');
+        if (mode === 'once_day') localStorage.setItem(STORAGE_KEY, Date.now().toString());
+      };
+    }
+
     // Iniciar funciones
     document.addEventListener("DOMContentLoaded", () => {
       obtenerEstadisticasExcel();
       registrarVisita();
       iniciarPresencia();
       registrarIP();
+      escucharAnuncioOnline();
     });
   </script>
 </body>
