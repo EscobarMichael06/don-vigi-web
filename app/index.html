@@ -141,6 +141,33 @@
     .modo-title { font-size:20px; font-weight:800; color:var(--primary); margin-bottom:8px; }
     .modo-desc { font-size:14px; color:var(--muted); line-height:1.6; font-weight:500; }
 
+    /* ── CARD DESTACADA "Vistas Corregidas" ──
+       Aparece arriba del listado normal de materias solo en las jerarquías
+       que tienen esta batería especial (por ahora Inspector→Subcomisario). */
+    .modo-card-destacada {
+      background:linear-gradient(135deg, #FFF8ED 0%, #FFEFD3 100%);
+      border:2px solid rgba(212,137,10,0.35);
+      box-shadow:0 6px 20px rgba(212,137,10,0.18);
+      border-radius:24px; padding:28px 24px; cursor:pointer;
+      transition:all .2s; text-align:center;
+      position:relative; overflow:hidden;
+    }
+    .modo-card-destacada:hover {
+      transform:translateY(-3px);
+      box-shadow:0 12px 30px rgba(212,137,10,0.28);
+      border-color:#D4890A;
+    }
+    .modo-card-destacada .modo-icon { color:#D4890A; }
+    .modo-card-destacada .modo-title { color:#A86808; font-size:20px; letter-spacing:1px; }
+    .modo-card-destacada .modo-desc { color:#8B6A32; font-weight:600; }
+    .badge-nuevo {
+      position:absolute; top:14px; right:14px;
+      background:#D4890A; color:#FFFFFF;
+      font-size:10px; font-weight:900; letter-spacing:1px;
+      padding:4px 10px; border-radius:100px;
+      box-shadow:0 2px 6px rgba(212,137,10,0.4);
+    }
+
     /* ── DIFICULTAD CHIPS ── */
     .dif-chip {
       padding:10px 20px; border-radius:100px; border:1.5px solid var(--border);
@@ -787,6 +814,10 @@ function seleccionarDificultad(d) {
   renderTemaOpciones();
 }
 
+// Nombre exacto de la materia especial "Vistas Corregidas" — si existe en la
+// jerarquía actual se renderiza como card destacada dorada arriba de todo.
+const NOMBRE_MATERIA_VISTAS = 'Preguntas de Concurso 2026 (Vistas Corregidas)';
+
 function renderTemaOpciones() {
   const preguntasJer = Object.values(appData.preguntas)
     .filter(p => {
@@ -803,13 +834,31 @@ function renderTemaOpciones() {
   });
   const materias = Object.values(materiasMap).sort((a, b) => a.nombre.localeCompare(b.nombre));
 
-  let html = `<div class="modo-card" onclick="seleccionarTema(null, ${preguntasJer.length})">
+  // Separar la materia especial "Vistas Corregidas" del resto para
+  // renderizarla como card destacada.
+  const vistas = materias.find(m => m.nombre === NOMBRE_MATERIA_VISTAS);
+  const materiasNormales = materias.filter(m => m.nombre !== NOMBRE_MATERIA_VISTAS);
+
+  let html = '';
+
+  // Card destacada arriba (solo si existe la materia en esta jerarquía).
+  if (vistas) {
+    const countVistas = preguntasJer.filter(p => String(p.mid) === String(vistas.id)).length;
+    html += `<div class="modo-card-destacada" onclick="seleccionarTema('${vistas.id}', ${countVistas})">
+      <div class="badge-nuevo">NUEVO</div>
+      <div class="modo-icon">⭐</div>
+      <div class="modo-title">PREGUNTAS DE CONCURSO 2026</div>
+      <div class="modo-desc">Vistas Corregidas · Preguntas reales del concurso · ${countVistas} preguntas</div>
+    </div>`;
+  }
+
+  html += `<div class="modo-card" onclick="seleccionarTema(null, ${preguntasJer.length})">
     <div class="modo-icon">📚</div>
     <div class="modo-title">Todas las materias</div>
     <div class="modo-desc">${preguntasJer.length} preguntas disponibles · temas mezclados</div>
   </div>`;
 
-  materias.forEach(mat => {
+  materiasNormales.forEach(mat => {
     const count = preguntasJer.filter(p => String(p.mid) === String(mat.id)).length;
     html += `<div class="modo-card" onclick="seleccionarTema('${mat.id}', ${count})">
       <div class="modo-icon">📖</div>
@@ -901,7 +950,7 @@ function renderPregunta() {
       <button class="vf-btn" id="vf-f" onclick="responderVF(1)">✗ Falso</button>
     </div><div id="feedback"></div>`;
   } else {
-    const letras = ['A','B','C','D','E'];
+    const letras = ['A','B','C','D','E','F'];
     html += p.op.map((o, i) => `
       <button class="opcion" id="op-${i}" onclick="responderOpcion(${i})">
         <span class="opcion-letra">${letras[i]}</span>
@@ -997,7 +1046,7 @@ function mostrarResultado() {
           RESPUESTAS INCORRECTAS (${incorrectas.length})
         </div>`;
       incorrectas.forEach(({ p, res }) => {
-        const letras = ['A','B','C','D','E'];
+        const letras = ['A','B','C','D','E','F'];
         const correctaTxt = p.op[res.correctaIdx]?.t || '—';
         const userTxt = res.respuestaIdx >= 0 ? (p.op[res.respuestaIdx]?.t || '—') : 'Sin responder';
         revHtml += `<div class="revision-item">
