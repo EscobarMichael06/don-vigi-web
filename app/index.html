@@ -52,6 +52,7 @@
 
     /* ── CONTENIDOS ── */
     .content { flex:1; padding:20px 16px; max-width:680px; width:100%; margin:0 auto; }
+    #preg-content { padding-bottom:110px; }
 
     /* ── LOGIN ── */
     .login-wrap { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; text-align:center; }
@@ -198,7 +199,9 @@
       transition:all .2s; margin-bottom:12px; text-align:left; width:100%;
       box-shadow:0 2px 8px rgba(0,0,0,0.02);
       user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+      min-height:56px; box-sizing:border-box;
     }
+    .opcion * { pointer-events:none; }
     .opcion:hover:not(:disabled) { border-color:var(--primary-light); background:var(--surface-active); box-shadow:0 6px 15px rgba(27,58,107,0.06); }
     .opcion:disabled { cursor:default; }
     .opcion.correcta { border-color:var(--green); background:rgba(56,161,105,0.05); }
@@ -221,15 +224,25 @@
     .feedback-box.ok .feedback-text { color:var(--green); }
     .feedback-box.mal .feedback-text { color:var(--red); }
 
-    .btn-next {
-      width:100%; background:var(--accent); color:#fff; font-size:16px;
-      font-weight:900; border:none; border-radius:16px; padding:20px;
-      cursor:pointer; letter-spacing:1px; margin-top:12px; text-transform:uppercase;
-      transition:background-color .2s, box-shadow .2s, opacity .2s; box-shadow:0 8px 20px rgba(212,137,10,0.3);
-      user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
-      display:flex; align-items:center; justify-content:center; min-height:56px;
+    /* ── BARRA FIJA DE BOTÓN SIGUIENTE (100% visible en móvil/desktop) ── */
+    .btn-next-wrap {
+      position:fixed; bottom:0; left:0; right:0;
+      background:rgba(255, 255, 255, 0.95);
+      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+      border-top:1px solid var(--border);
+      box-shadow:0 -6px 25px rgba(27,58,107,0.15);
+      padding:14px 16px; padding-bottom:max(14px, env(safe-area-inset-bottom));
+      z-index:1000; display:none; justify-content:center; align-items:center;
     }
-    .btn-next:hover { background:#B87405; box-shadow:0 12px 25px rgba(212,137,10,0.4); }
+    .btn-next {
+      max-width:680px; width:100%; background:var(--accent); color:#fff; font-size:17px;
+      font-weight:900; border:none; border-radius:16px; padding:18px 24px;
+      cursor:pointer; letter-spacing:1px; text-transform:uppercase;
+      transition:background-color .2s, box-shadow .2s, opacity .2s; box-shadow:0 4px 15px rgba(212,137,10,0.4);
+      user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+      display:flex; align-items:center; justify-content:center; min-height:56px; margin:0 auto;
+    }
+    .btn-next:hover { background:#B87405; box-shadow:0 8px 20px rgba(212,137,10,0.5); }
 
     /* ── RESULTADO ── */
     .resultado-wrap { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:40px 20px; text-align:center; overflow-y:auto; }
@@ -411,6 +424,9 @@
     <span class="topbar-info" id="preg-modo-badge"></span>
   </div>
   <div class="content" id="preg-content"></div>
+  <div class="btn-next-wrap" id="btn-next-wrap" style="display:none">
+    <button class="btn-next" id="btn-next" onclick="siguientePregunta()">SIGUIENTE →</button>
+  </div>
 </div>
 
 <!-- ══════════════════ SCREEN: RESULTADO ══════════════════ -->
@@ -940,6 +956,9 @@ function renderPregunta() {
     mostrarResultado();
     return;
   }
+  const btnWrap = document.getElementById('btn-next-wrap');
+  if (btnWrap) btnWrap.style.display = 'none';
+
   const p    = preguntasActuales[preguntaIdx];
   const pct  = Math.round((preguntaIdx / preguntasActuales.length) * 100);
   const cont = document.getElementById('preg-content');
@@ -965,20 +984,15 @@ function renderPregunta() {
     html += `<div id="feedback"></div>`;
   }
 
-  html += `<button class="btn-next" id="btn-next" style="display:none" onclick="siguientePregunta()">
-    ${preguntaIdx + 1 < preguntasActuales.length ? 'Siguiente →' : 'Ver resultado'}
-  </button>`;
-
   cont.innerHTML = html;
 }
 
 function mostrarBotonSiguiente() {
+  const btnWrap = document.getElementById('btn-next-wrap');
   const btnNext = document.getElementById('btn-next');
-  if (btnNext) {
-    btnNext.style.display = 'flex';
-    setTimeout(() => {
-      btnNext.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 50);
+  if (btnWrap && btnNext) {
+    btnNext.textContent = (preguntaIdx + 1 < preguntasActuales.length) ? 'SIGUIENTE →' : 'VER RESULTADO';
+    btnWrap.style.display = 'flex';
   }
 }
 
@@ -1027,6 +1041,8 @@ function responderVF(idx) {
 }
 
 function siguientePregunta() {
+  const btnWrap = document.getElementById('btn-next-wrap');
+  if (btnWrap) btnWrap.style.display = 'none';
   preguntaIdx++;
   window.scrollTo(0, 0);
   renderPregunta();
@@ -1036,6 +1052,8 @@ function siguientePregunta() {
 // RESULTADO
 // ═══════════════════════════════════════
 function mostrarResultado() {
+  const btnWrap = document.getElementById('btn-next-wrap');
+  if (btnWrap) btnWrap.style.display = 'none';
   const total = preguntasActuales.length;
   const pct   = Math.round((correctas / total) * 100);
   const aprobado = pct >= 60;
