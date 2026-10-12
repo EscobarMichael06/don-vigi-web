@@ -102,6 +102,14 @@ body {
 .dv-text-link { color: var(--g-yellow); }
 
 .dv-stats { max-width: 1000px; padding: 32px; border: 3px solid var(--g-ink); border-radius: 25px; color: var(--g-ink); background: var(--g-cream); box-shadow: 8px 9px 0 var(--g-yellow); transform: rotate(.4deg); }
+.dv-stats [hidden] { display: none !important; }
+.dv-stat-item { position: relative; display: grid; grid-template-columns: auto auto; justify-content: center; align-items: center; column-gap: 16px; }
+.dv-stat-icon { grid-row: 1/3; width: 62px; height: 62px; display: grid; place-items: center; border: 2px solid var(--g-ink); border-radius: 18px; color: var(--g-ink); background: var(--g-cyan); box-shadow: 4px 5px 0 var(--g-ink); transform: rotate(-4deg); }
+.dv-stat-item:nth-of-type(3) .dv-stat-icon { background: var(--g-yellow); transform: rotate(4deg); }
+.dv-stat-icon svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dv-stat-item .stat-number { margin: 0; text-align: left; }
+.dv-stat-item p { text-align: left; }
+.dv-stat-item small { grid-column: 2; margin-top: 4px; color: #677885; font-size: 10px; font-weight: 700; text-align: left; }
 .dv-stats .stat-number { color: var(--g-ink); -webkit-text-fill-color: var(--g-ink); text-shadow: 2px 3px 0 var(--g-yellow); }
 .dv-stats p { color: #354a5c; }.dv-stat-divider { background: var(--g-ink); }
 .dv-final-cta { max-width: 1280px; border: 3px solid var(--g-ink); border-radius: 32px; background: linear-gradient(120deg,#07b9b4,#00a19e); box-shadow: 10px 11px 0 var(--g-yellow),14px 15px 0 var(--g-ink); }
@@ -125,7 +133,7 @@ body {
   .dv-hero { margin: 5px 12px 0; padding: 42px 20px 52px; border-radius: 24px; box-shadow: 5px 7px 0 var(--g-cream), 8px 10px 0 var(--g-ink); overflow: hidden; }.dv-hero h1 { font-size: clamp(40px,12.3vw,50px); letter-spacing: -2.5px; }.dv-hero-copy > p { font-size: 14px; }.dv-primary-button,.dv-secondary-button { min-height: 52px; }.dv-device-stage { min-height: 510px; }.dv-device-stage::before { width: 285px; height: 400px; }.dv-phone { width: 192px; }.dv-floating-note { max-width: 140px; }.dv-note-right { right: -4px; }.dv-note-left { left: -4px; }
   .dv-purpose { margin-top: 35px; }.dv-section { padding: 82px 14px; }.dv-section-heading h2 { font-size: 40px; }.dv-feature-grid { gap: 22px; }.dv-feature-card,.dv-feature-wide { min-height: 570px; padding: 27px 23px 280px; display: block; }.dv-feature-card h3 { font-size: 30px; }.dv-feature-card p { font-size: 14px; }.dv-feature-wide::before { display: none; }.dv-mini-calendar { position: absolute; left: 20px; right: 20px; bottom: 20px; min-height: 245px; background-position: center 15%; transform: rotate(1deg); }
   #recordatorios,.dv-feature-dark,.dv-feature-grid > article:last-child { grid-column: auto; min-height: 570px; padding-right: 23px; padding-bottom: 285px; }.dv-feature-card::after,#recordatorios::after,.dv-feature-dark::after,.dv-feature-grid > article:last-child::after { right: 20px; left: 20px; bottom: 18px; width: auto; height: 245px; border-radius: 20px; transform: rotate(1deg); background-position: center 12%; }
-  .dv-notification-demo { display: none; }.dv-flow-section { margin: 0 14px 75px; padding: 38px 22px; box-shadow: 6px 7px 0 var(--g-cyan),9px 10px 0 var(--g-ink); }.dv-flow-copy h2,.dv-final-cta h2 { font-size: 38px; }.dv-stats { margin-left: 16px; margin-right: 16px; padding: 28px 20px; }.dv-final-cta { margin-left: 14px; margin-right: 14px; padding: 38px 22px; box-shadow: 6px 7px 0 var(--g-yellow),9px 10px 0 var(--g-ink); }
+  .dv-notification-demo { display: none; }.dv-flow-section { margin: 0 14px 75px; padding: 38px 22px; box-shadow: 6px 7px 0 var(--g-cyan),9px 10px 0 var(--g-ink); }.dv-flow-copy h2,.dv-final-cta h2 { font-size: 38px; }.dv-stats { margin-left: 16px; margin-right: 16px; padding: 28px 20px; }.dv-stat-item { grid-template-columns: auto 1fr; }.dv-stat-icon { width: 54px; height: 54px; }.dv-final-cta { margin-left: 14px; margin-right: 14px; padding: 38px 22px; box-shadow: 6px 7px 0 var(--g-yellow),9px 10px 0 var(--g-ink); }
 }
 
 @media (prefers-reduced-motion: reduce) { .dv-marquee-track { animation: none; } }
