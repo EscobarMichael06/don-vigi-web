@@ -27,6 +27,14 @@ header {
   max-width: 1440px; min-height: 92px; margin: 0 auto; padding: 18px clamp(22px,5vw,70px);
   color: var(--dv-cream); background: transparent;
 }
+.dv-header { position: relative; z-index: 1000; max-width: 1400px; min-height: 96px; margin: 0 auto; padding: 22px clamp(24px,5vw,76px); display: flex; align-items: center; justify-content: space-between; gap: 30px; color: var(--dv-cream); }
+.dv-brand { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; color: var(--dv-cream); text-decoration: none; font-family: 'Plus Jakarta Sans',sans-serif; font-size: 25px; font-weight: 900; white-space: nowrap; }
+.dv-brand img { border: 2px solid var(--dv-cyan); border-radius: 13px; box-shadow: 4px 5px 0 var(--dv-ink); object-fit: cover; }.dv-brand strong { color: var(--accent); }
+.dv-nav { position: static; max-width: none; margin-right: auto; padding: 0; display: flex; align-items: center; gap: clamp(18px,2.8vw,42px); border: 0; background: transparent !important; box-shadow: none; }
+.dv-nav a { color: var(--dv-cream); text-decoration: none; font-size: 11px; font-weight: 900; letter-spacing: .3px; text-transform: uppercase; }.dv-nav a:hover { color: var(--accent); }
+.dv-header-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.dv-web-link { padding: 10px 16px; border: 2px solid var(--dv-ink); border-radius: 12px; color: var(--dv-ink); background: var(--accent); box-shadow: 4px 5px 0 rgba(0,0,0,.45); text-decoration: none; font-size: 12px; font-weight: 800; line-height: 1.05; text-align: center; text-transform: uppercase; transform: rotate(-1deg); }.dv-web-link small { display: block; margin-top: 3px; color: #563d00; font-size: 9px; font-weight: 600; text-transform: none; }
+.dv-menu-button { display: none; border: 0; color: var(--dv-cream); background: transparent; font-size: 26px; cursor: pointer; }
 .logo { color: var(--dv-cream); font-size: 22px; }
 .logo img { border: 2px solid var(--dv-cyan); border-radius: 11px !important; box-shadow: 3px 4px 0 #020d1b !important; }
 .logo span { color: var(--accent); }
@@ -122,10 +130,11 @@ body > nav { max-width: 1200px; margin: 0 auto; padding: 22px 28px; display: fle
 
 @media (max-width: 1024px) {
   header { min-height: 72px; padding: 13px 16px; }.nav-links { background: var(--dv-cream); border: 3px solid var(--dv-ink); }.nav-links a { color: var(--dv-ink) !important; }
+  .dv-header { min-height: 78px; padding: 16px 20px; }.dv-brand { position: static; transform: none; font-size: 19px; }.dv-brand img { width: 42px; height: 42px; }.dv-nav { display: none; position: absolute; top: 72px; left: 18px; right: 18px; margin: 0; padding: 24px; flex-direction: column; border: 3px solid var(--dv-ink); border-radius: 20px; background: var(--dv-cream); box-shadow: 6px 7px 0 var(--dv-ink); }.dv-nav.is-open { display: flex; }.dv-nav a { color: var(--dv-ink); }.dv-menu-button { display: block; }.dv-web-link { padding: 8px 11px; font-size: 10px; }
   .section-padding { padding-left: 20px; padding-right: 20px; } body > section.section-padding:first-of-type { margin-left: 18px; margin-right: 18px; padding: 48px 30px !important; }
 }
 @media (max-width: 700px) {
-  body { background-size: 100% 230px !important; }.logo { font-size: 17px; }.logo img { height: 38px !important; }.btn-login-special { font-size: 9px !important; }
+  body { background-size: 100% 230px !important; }.logo { font-size: 17px; }.logo img { height: 38px !important; }.btn-login-special { font-size: 9px !important; }.dv-header { gap: 8px; }.dv-brand { gap: 8px; font-size: 17px; }.dv-brand img { width: 38px; height: 38px; border-radius: 10px; }.dv-header-actions { gap: 6px; }.dv-web-link { width: 58px; padding: 9px 7px; font-size: 0; }.dv-web-link::before { content: 'Web'; font-size: 10px; }.dv-web-link small { display: none; }.dv-menu-button { font-size: 24px; }
   body > section.section-padding:first-of-type { margin: 6px 12px 55px; padding: 38px 20px !important; border-radius: 23px; box-shadow: 5px 7px 0 var(--dv-cream),8px 10px 0 var(--dv-ink); }.section-title { font-size: 38px !important; letter-spacing: -1.7px; }
   .section-padding { padding: 55px 14px; }.about-text,.price-wrap,.download-hero,.action-box,.security-section,.card-container { padding: 27px 21px !important; }.cards-wrapper { padding: 0 14px; }.info-card,.value-card,.requirement-card,.detail-card { min-height: auto; }.price-wrap { flex-direction: column; }.price-box { width: 100%; }.comparison-table-wrapper { overflow-x: auto; }.comparison-table { min-width: 660px; }
 }

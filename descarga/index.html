@@ -60,28 +60,23 @@
 <body>
 
   <!-- HEADER -->
-  <header>
-    <a href="../" class="logo" style="display: flex; align-items: center; gap: 10px;">
-      <img src="../assets/images/logo.jpg" alt="DON VIGI" style="height: 48px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
-      DON <span>VIGI</span>
+    <header class="dv-header">
+    <a href="../" class="dv-brand" aria-label="DON VIGI, inicio">
+      <img src="../assets/images/logo.jpg" alt="" width="48" height="48">
+      <span>DON <strong>VIGI</strong></span>
     </a>
-    <nav class="nav-links">
-      <a href="../">Inicio</a>
+    <nav class="dv-nav" aria-label="Navegación principal">
+      <a href="../#organizacion">Organización</a>
+      <a href="../#estudio">Estudio</a>
+      <a href="../#recordatorios">Recordatorios</a>
       <a href="../como-funciona/">Cómo funciona</a>
-      <a href="../nosotros/">Nosotros</a>
-      <a href="../comprar/">Comprar</a>
-      <a href="./" style="color: var(--primary);">Descarga</a>
-      <a href="../contacto/">Contacto</a>
-      <a href="../privacidad/">Privacidad</a>
     </nav>
-    <div class="header-actions">
-      <a href="../app/" class="btn-login btn-login-special">
-        <span class="desktop-text">APP VERSIÓN WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
-        <span class="mobile-text" style="display:none;">APP WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
-      </a>
-      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
+    <div class="dv-header-actions">
+      <a href="../app" class="dv-web-link">Versión web <small>Preguntero</small></a>
+      <button class="dv-menu-button" type="button" aria-label="Abrir menú" aria-expanded="false" onclick="const nav=document.querySelector('.dv-nav'); const open=nav.classList.toggle('is-open'); this.setAttribute('aria-expanded',open);">☰</button>
     </div>
   </header>
+
 
   <!-- DESCARGA MAIN HERO -->
   <section class="section-padding reveal active" style="padding-top: 40px; padding-bottom: 20px;">
