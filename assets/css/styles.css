@@ -109,6 +109,7 @@ header {
 }
 
 .hero-desc { font-size: 18px; color: var(--muted); margin: 0 auto 40px; font-weight: 400; line-height: 1.7; max-width: 550px; text-wrap: pretty; text-align: center;}
+.hero-actions { display: flex; gap: 16px; margin-top: 10px; justify-content: center; align-items: center; }
 
 /* ── HERO RIGHT (GLOW & CAROUSEL) ── */
 .hero-right {
@@ -129,22 +130,42 @@ header {
   100% { transform: translateY(-50%) scale(1.1); opacity: 1; }
 }
 
-.pc-mockup {
-  position: relative; z-index: 10;
-  width: 580px; height: 350px;
-  background: #000; border-radius: 12px 12px 0 0;
-  box-shadow: -30px 40px 80px rgba(0,0,0,0.4), inset 0 0 0 10px #222;
-  margin-right: 20px; 
+.phone-showcase {
+  position: relative; z-index: 10; margin-right: 90px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+.phone-mockup {
+  position: relative; width: 232px; aspect-ratio: 9 / 19.5;
+  padding: 9px; border-radius: 38px;
+  background: linear-gradient(145deg, #334155 0%, #050b16 45%, #172033 100%);
+  box-shadow: -22px 34px 65px rgba(14,31,58,0.36), inset 0 0 0 1px rgba(255,255,255,0.24);
   animation: floatPhone 6s ease-in-out infinite;
-  display: flex; flex-direction: column;
 }
-.pc-mockup::after {
-  content: ''; position: absolute; bottom: -15px; left: -5%; width: 110%; height: 15px;
-  background: linear-gradient(to bottom, #e2e8f0, #94a3b8); border-radius: 2px 2px 10px 10px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.4); z-index: -1;
+.phone-mockup::before {
+  content: ''; position: absolute; inset: 3px; border-radius: 35px;
+  border: 1px solid rgba(255,255,255,0.13); pointer-events: none; z-index: 3;
 }
-.pc-screen { position: relative; width: 100%; height: 100%; border-radius: 4px; overflow: hidden; background: #0E1F3A; }
-.pc-screen iframe { width: 100%; height: 100%; border: none; object-fit: cover; }
+.phone-speaker {
+  position: absolute; z-index: 4; top: 15px; left: 50%; transform: translateX(-50%);
+  width: 62px; height: 16px; border-radius: 0 0 12px 12px; background: #050811;
+}
+.phone-screen {
+  position: relative; width: 100%; height: 100%; overflow: hidden;
+  border-radius: 30px; background: #071326;
+}
+.phone-screen video {
+  display: block; width: 100%; height: 100%; object-fit: cover; background: #071326;
+}
+.phone-home-indicator {
+  position: absolute; z-index: 4; bottom: 14px; left: 50%; transform: translateX(-50%);
+  width: 76px; height: 4px; border-radius: 999px; background: rgba(255,255,255,0.85); pointer-events: none;
+}
+.video-hint {
+  margin: 0; padding: 8px 14px; border-radius: 999px;
+  color: var(--primary); background: rgba(255,255,255,0.78); border: 1px solid rgba(27,58,107,0.1);
+  box-shadow: 0 10px 30px rgba(27,58,107,0.1); backdrop-filter: blur(12px);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1px;
+}
 
 @keyframes floatPhone {
   0% { transform: translateY(0) rotate(-1deg); }
@@ -296,15 +317,16 @@ footer a:hover { color: var(--primary); }
   .mobile-text { display: inline !important; }
   
   .hero { flex-direction: column; padding: 40px 30px 80px; text-align: center; }
-  .hero-left { margin-bottom: 60px; display: flex; flex-direction: column; align-items: center; }
-  .hero-title { font-size: 44px; text-wrap: balance; }
+  .hero-left { width: 100%; min-width: 0; margin-bottom: 60px; display: flex; flex-direction: column; align-items: center; }
+  .hero-title { width: 100%; font-size: clamp(34px, 10vw, 44px); text-wrap: balance; overflow-wrap: anywhere; }
   .hero-desc { font-size: 16px; }
+  .hero-actions { width: 100%; flex-wrap: wrap; gap: 12px; }
   
   .hero-right { width: 100%; justify-content: center; height: auto; padding-bottom: 20px; }
   .glow-bg { right: 50%; transform: translateX(50%) translateY(-50%); width: 300px; height: 300px; filter: blur(40px);}
   
-  .pc-mockup { margin: 0 auto; width: 90vw; height: 55vw; border-radius: 8px 8px 0 0; box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 6px #222;}
-  .pc-mockup::after { height: 10px; bottom: -10px; left: -2%; width: 104%; border-radius: 2px 2px 6px 6px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+  .phone-showcase { margin: 0 auto; gap: 14px; }
+  .phone-mockup { width: min(220px, 62vw); }
   
 
   .cards-wrapper { margin: 20px auto 60px; padding: 0 20px; }

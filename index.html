@@ -45,7 +45,7 @@
     <div class="hero-left">
       <h1 class="hero-title">Estudiá y organizá tus guardias y servicios.</h1>
       <p class="hero-desc">Una ayuda diseñada por y para personal policial. Controlá tus guardias y adicionales y preparate para los concursos de ascenso con la app más completa. (Aplicación NO Oficial).</p>
-      <div style="display: flex; gap: 16px; margin-top: 10px; justify-content: center; align-items: center;">
+      <div class="hero-actions">
         <a href="https://play.google.com/store/apps/details?id=com.preguntero.policial" target="_blank" class="play-badge">
           <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es_badge_web_generic.png" alt="Disponible en Google Play" style="height: 50px; display: block;">
         </a>
@@ -56,11 +56,19 @@
     <div class="hero-right reveal active delay-1">
       <div class="glow-bg"></div>
       
-      <!-- Mockup PC Animado -->
-      <div class="pc-mockup">
-        <div class="pc-screen">
-          <iframe src="assets/video/video.html" scrolling="no" allow="autoplay" allowfullscreen></iframe>
+      <!-- Presentacion de la app en un telefono -->
+      <div class="phone-showcase">
+        <div class="phone-mockup">
+          <div class="phone-speaker" aria-hidden="true"></div>
+          <div class="phone-screen">
+            <video autoplay muted loop playsinline controls preload="metadata" poster="assets/video/don-vigi-presentacion.jpg" aria-label="Video de presentacion de la app DON VIGI">
+              <source src="assets/video/don-vigi-presentacion.mp4" type="video/mp4">
+              Tu navegador no puede reproducir este video.
+            </video>
+          </div>
+          <div class="phone-home-indicator" aria-hidden="true"></div>
         </div>
+        <p class="video-hint">Activá el sonido para conocer DON VIGI</p>
       </div>
     </div>
   </section>
