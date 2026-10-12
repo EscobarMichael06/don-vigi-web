@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>DON VIGI - App de estudio y gestión de servicios policiales</title>
+  <title>DON VIGI - Organización y apoyo para personal policial</title>
+  <meta name="description" content="Organizá guardias, servicios, recordatorios, actividad académica y estudio desde una sola app creada para acompañar al personal policial.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,150 +14,176 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/homepage-v2.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <a href="./" class="logo" style="display: flex; align-items: center; gap: 10px;">
-      <img src="assets/images/logo.jpg" alt="DON VIGI" style="height: 48px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
-      DON <span>VIGI</span>
+  <header class="dv-header">
+    <a href="./" class="dv-brand" aria-label="DON VIGI, inicio">
+      <img src="assets/images/logo.jpg" alt="" width="48" height="48">
+      <span>DON <strong>VIGI</strong></span>
     </a>
-    <nav class="nav-links">
-      <a href="./" style="color: var(--primary);">Inicio</a>
+    <nav class="dv-nav" aria-label="Navegación principal">
+      <a href="#organizacion">Organización</a>
+      <a href="#estudio">Estudio</a>
+      <a href="#recordatorios">Recordatorios</a>
       <a href="como-funciona/">Cómo funciona</a>
-      <a href="nosotros/">Nosotros</a>
-      <a href="comprar/">Comprar</a>
-      <a href="descarga/">Descarga</a>
-      <a href="contacto/">Contacto</a>
-      <a href="privacidad/">Privacidad</a>
     </nav>
-    <div class="header-actions">
-      <a href="app" class="btn-login btn-login-special">
-        <span class="desktop-text">APP VERSIÓN WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
-        <span class="mobile-text" style="display:none;">APP WEB <span style="display:block; font-size:9px; opacity:0.9; text-transform:none; font-weight:600; letter-spacing:0; margin-top:2px;">(Preguntero)</span></span>
-      </a>
-      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active');">☰</button>
+    <div class="dv-header-actions">
+      <a href="app" class="dv-web-link">Versión web <small>Preguntero</small></a>
+      <button class="dv-menu-button" type="button" aria-label="Abrir menú" aria-expanded="false" onclick="const nav=document.querySelector('.dv-nav'); const open=nav.classList.toggle('is-open'); this.setAttribute('aria-expanded',open);">☰</button>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section id="inicio" class="hero reveal active">
-    <div class="hero-left">
-      <h1 class="hero-title">Estudiá y organizá tus guardias y servicios.</h1>
-      <p class="hero-desc">Una ayuda diseñada por y para personal policial. Controlá tus guardias y adicionales y preparate para los concursos de ascenso con la app más completa. (Aplicación NO Oficial).</p>
-      <div class="hero-actions">
-        <a href="https://play.google.com/store/apps/details?id=com.preguntero.policial" target="_blank" class="play-badge">
-          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es_badge_web_generic.png" alt="Disponible en Google Play" style="height: 50px; display: block;">
-        </a>
-        <a href="como-funciona/" class="btn-action-secondary" style="padding: 10px 20px; font-size: 14px; max-width: 180px; text-decoration: none; height: 38px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px;">Cómo Funciona</a>
+  <main>
+    <section class="dv-hero">
+      <div class="dv-hero-copy reveal active">
+        <span class="dv-eyebrow"><i></i> Tu jornada, organizada en un solo lugar</span>
+        <h1>Más control para tu día.<br><em>Más tiempo para vos.</em></h1>
+        <p>DON VIGI reúne la organización de guardias y servicios, los recordatorios importantes y el seguimiento académico en una app creada para acompañar al personal policial.</p>
+        <div class="dv-hero-actions">
+          <a href="https://play.google.com/store/apps/details?id=com.preguntero.policial" target="_blank" rel="noopener" class="dv-primary-button">
+            <span class="dv-play-icon">▶</span><span><small>Disponible en</small>Google Play</span>
+          </a>
+          <a href="#funciones" class="dv-secondary-button">Explorar funciones <span>↓</span></a>
+        </div>
+        <div class="dv-trust-row">
+          <span><b>✓</b> Organización diaria</span>
+          <span><b>✓</b> Alertas con anticipación</span>
+          <span><b>✓</b> Apoyo académico</span>
+        </div>
       </div>
-    </div>
 
-    <div class="hero-right reveal active delay-1">
-      <div class="glow-bg"></div>
-      
-      <!-- Presentacion de la app en un telefono -->
-      <div class="phone-showcase">
-        <div class="phone-mockup">
-          <div class="phone-speaker" aria-hidden="true"></div>
-          <div class="phone-screen">
-            <video autoplay muted loop playsinline controls preload="metadata" poster="assets/video/don-vigi-presentacion.jpg" aria-label="Video de presentacion de la app DON VIGI">
-              <source src="assets/video/don-vigi-presentacion.mp4" type="video/mp4">
-              Tu navegador no puede reproducir este video.
-            </video>
+      <div class="dv-device-stage reveal active delay-1">
+        <div class="dv-orbit dv-orbit-one"></div>
+        <div class="dv-orbit dv-orbit-two"></div>
+        <div class="dv-floating-note dv-note-left">
+          <span class="dv-note-icon teal">✓</span>
+          <div><small>Próximo servicio</small><strong>Recordatorio activo</strong></div>
+        </div>
+        <div class="dv-phone">
+          <div class="dv-phone-speaker"></div>
+          <video autoplay muted loop playsinline controls preload="metadata" poster="assets/video/don-vigi-presentacion.jpg" aria-label="Presentación de DON VIGI">
+            <source src="assets/video/don-vigi-presentacion.mp4" type="video/mp4">
+          </video>
+          <div class="dv-phone-home"></div>
+        </div>
+        <div class="dv-floating-note dv-note-right">
+          <span class="dv-note-icon amber">★</span>
+          <div><small>Todo al día</small><strong>Agenda organizada</strong></div>
+        </div>
+        <button class="dv-sound-hint" type="button" onclick="const v=document.querySelector('.dv-phone video'); v.muted=!v.muted; this.querySelector('span').textContent=v.muted?'Activar sonido':'Silenciar video';"><i>♪</i><span>Activar sonido</span></button>
+      </div>
+    </section>
+
+    <section class="dv-purpose reveal" aria-label="Propuesta de DON VIGI">
+      <p>Una herramienta pensada para que la información importante no dependa de la memoria ni quede dispersa.</p>
+      <div class="dv-purpose-line"></div>
+      <span>Aplicación independiente y no oficial</span>
+    </section>
+
+    <section class="dv-section" id="funciones">
+      <div class="dv-section-heading reveal">
+        <span class="dv-kicker">Todo conectado</span>
+        <h2>La app que acompaña cada parte de tu rutina</h2>
+        <p>Cargá una vez la información y consultala de forma clara cuando la necesites.</p>
+      </div>
+
+      <div class="dv-feature-grid">
+        <article class="dv-feature-card dv-feature-wide reveal" id="organizacion">
+          <div class="dv-feature-copy">
+            <span class="dv-feature-number">01</span>
+            <div class="dv-icon-box navy">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zM8 13h3v3H8z"/></svg>
+            </div>
+            <h3>Guardias y servicios bajo control</h3>
+            <p>Organizá fechas, horarios y detalles en calendarios simples. Visualizá tu actividad mensual y recibí avisos antes de cada compromiso.</p>
+            <ul><li>Calendario de guardias</li><li>Servicios programados</li><li>Resumen mensual</li></ul>
           </div>
-          <div class="phone-home-indicator" aria-hidden="true"></div>
-        </div>
-        <p class="video-hint">Activá el sonido para conocer DON VIGI</p>
-      </div>
-    </div>
-  </section>
+          <div class="dv-mini-calendar" aria-hidden="true">
+            <div class="dv-calendar-top"><span>Octubre</span><b>Vista mensual</b></div>
+            <div class="dv-calendar-days"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+            <div class="dv-calendar-grid"><i></i><i></i><i>1</i><i>2</i><i>3</i><i class="guard">4</i><i>5</i><i>6</i><i class="service">7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i><i>13</i><i>14</i><i class="guard">15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i><i>21</i><i>22</i><i class="service">23</i><i>24</i><i>25</i><i>26</i><i>27</i><i>28</i><i>29</i><i>30</i><i>31</i></div>
+            <div class="dv-calendar-legend"><span><i class="guard"></i> Guardia</span><span><i class="service"></i> Servicio</span></div>
+          </div>
+        </article>
 
-  <!-- CARDS SUPERPUESTAS (Enlaces a secciones) -->
-  <div class="cards-wrapper">
-    <div class="cards-container">
-      <div class="info-card reveal active delay-1" style="cursor: pointer;" onclick="window.location.href='como-funciona/'">
-        <div class="ic-icon">📝</div>
-        <div class="ic-text">
-          <h4>+1000 Preguntas</h4>
-          <p>Divididas por jerarquías para estudiar exacto lo que necesitás. <strong style="color: var(--primary); display: block; margin-top: 8px;">Ver más detalles →</strong></p>
-        </div>
-      </div>
-      <div class="info-card reveal active delay-2" style="cursor: pointer;" onclick="window.location.href='comprar/'">
-        <div class="ic-icon" style="color: var(--accent); background: rgba(212,137,10,0.1);">💻</div>
-        <div class="ic-text">
-          <h4>Versión Web</h4>
-          <p>Ingresá desde cualquier PC o iPhone/Android para practicar más cómodo. <strong style="color: var(--primary); display: block; margin-top: 8px;">Comparar versiones →</strong></p>
-        </div>
-      </div>
-      <div class="info-card reveal active delay-3" style="cursor: pointer;" onclick="window.location.href='descarga/'">
-        <div class="ic-icon">📱</div>
-        <div class="ic-text">
-          <h4>App Android</h4>
-          <p>Estudiá y llevá el control de tus guardias y adicionales en tu celular. <strong style="color: var(--primary); display: block; margin-top: 8px;">Ir a descargar →</strong></p>
-        </div>
-      </div>
-    </div>
-  </div>
+        <article class="dv-feature-card reveal" id="recordatorios">
+          <span class="dv-feature-number">02</span>
+          <div class="dv-icon-box teal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+          </div>
+          <h3>Recordatorios que llegan a tiempo</h3>
+          <p>Recibí alertas con sonido para guardias, servicios, trabajos académicos y anuncios importantes.</p>
+          <div class="dv-notification-demo"><span>♪</span><div><small>DON VIGI</small><strong>Tenés una actividad próxima</strong></div><b>Ahora</b></div>
+        </article>
 
-  <!-- ESTADÍSTICAS -->
-  <section class="stats-section reveal active" id="stats-section">
-    <div class="stats-container">
-      <div class="stat-box">
-        <div class="stat-icon">📱</div>
-        <div class="stat-number" id="count-app">0</div>
-        <div class="stat-label">Usuarios Android</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-icon">💻</div>
-        <div class="stat-number" id="count-web">0</div>
-        <div class="stat-label">Usuarios Web</div>
-      </div>
-      <div class="stat-box" style="display: none;">
-        <div class="stat-icon">👁️</div>
-        <div class="stat-number" id="count-visits">0</div>
-        <div class="stat-label">Visitas Totales</div>
-      </div>
-    </div>
-  </section>
+        <article class="dv-feature-card dv-feature-dark reveal" id="estudio">
+          <span class="dv-feature-number">03</span>
+          <div class="dv-icon-box amber">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6l9-4 9 4-9 4-9-4zm3 3v6c3 3 9 3 12 0V9M21 7v7"/></svg>
+          </div>
+          <h3>Tu actividad académica, visible</h3>
+          <p>Consultá los trabajos de las escuelas donde estés cursando y recibí recordatorios para no perder fechas importantes.</p>
+          <a href="como-funciona/">Ver cómo funciona <span>→</span></a>
+        </article>
 
-  <!-- CTA PREMIUM -->
-  <section class="section-padding reveal active" style="padding-top: 20px; padding-bottom: 60px;">
-    <div class="action-box" style="text-align: center; max-width: 900px; margin: 0 auto; padding: 50px 40px;">
-      <span class="section-subtitle">¿Listo para empezar?</span>
-      <h3 style="font-size: 32px; margin-bottom: 15px;">Preparate para el examen de ascenso hoy mismo</h3>
-      <p style="font-size: 16px; color: var(--muted); max-width: 600px; margin: 0 auto 30px;">
-        Unite a cientos de agentes que ya confían en DON VIGI para organizar sus servicios y optimizar su estudio.
-      </p>
-      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-        <a href="comprar/" class="btn-action" style="padding: 12px 24px; font-size: 15px; max-width: 220px;">Adquirir Licencia</a>
-        <a href="contacto/" class="btn-action dark" style="padding: 12px 24px; font-size: 15px; max-width: 220px;">Contactar Soporte</a>
+        <article class="dv-feature-card reveal">
+          <span class="dv-feature-number">04</span>
+          <div class="dv-icon-box violet">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM8 8h8M8 12h5M8 16h7"/></svg>
+          </div>
+          <h3>Preparación y banco de preguntas</h3>
+          <p>Practicá por jerarquías con preguntas organizadas y accedé también desde la versión web cuando prefieras estudiar en una pantalla grande.</p>
+          <div class="dv-study-tags"><span>Por jerarquía</span><span>App + Web</span><span>Práctica ágil</span></div>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER -->
-  <footer class="reveal active">
-    <div style="margin-bottom: 24px;">
-      <a href="./">Inicio</a>
-      <a href="como-funciona/">Cómo funciona</a>
-      <a href="nosotros/">Nosotros</a>
-      <a href="comprar/">Comprar</a>
-      <a href="descarga/">Descarga</a>
-      <a href="contacto/">Contacto</a>
-      <a href="privacidad/">Privacidad</a>
-    </div>
-    <p>© 2026 DON VIGI · Herramienta Policial No Oficial. Todos los derechos reservados.</p>
-    <p style="margin-top:8px; font-size:12px; opacity:0.75;">
-      Soporte: <a href="mailto:soportedonvigi@gmail.com" style="color:inherit;">soportedonvigi@gmail.com</a>
-    </p>
+    <section class="dv-flow-section">
+      <div class="dv-flow-copy reveal">
+        <span class="dv-kicker light">Simple desde el primer día</span>
+        <h2>Menos cosas para recordar.<br>Más claridad para decidir.</h2>
+        <p>DON VIGI transforma distintas tareas cotidianas en un recorrido simple y ordenado.</p>
+        <a href="como-funciona/" class="dv-text-link">Conocer la app paso a paso <span>→</span></a>
+      </div>
+      <div class="dv-flow-steps reveal delay-1">
+        <div><b>1</b><span><strong>Cargá</strong><small>Guardias, servicios y datos importantes.</small></span></div>
+        <div><b>2</b><span><strong>Organizá</strong><small>Visualizá tu agenda y actividad académica.</small></span></div>
+        <div><b>3</b><span><strong>Recibí avisos</strong><small>La app te recuerda lo que se aproxima.</small></span></div>
+      </div>
+    </section>
+
+    <section class="dv-stats reveal" id="stats-section">
+      <div><span class="stat-number" id="count-app">0</span><p>personas usan la app Android</p></div>
+      <div class="dv-stat-divider"></div>
+      <div><span class="stat-number" id="count-web">0</span><p>personas acceden a la versión web</p></div>
+      <div class="stat-number" id="count-visits" hidden>0</div>
+    </section>
+
+    <section class="dv-final-cta reveal">
+      <div>
+        <span class="dv-kicker light">Empezá a organizarte mejor</span>
+        <h2>Todo lo importante,<br>siempre cerca.</h2>
+        <p>Descargá DON VIGI o conocé las opciones disponibles para elegir la que mejor se adapte a vos.</p>
+      </div>
+      <div class="dv-cta-actions">
+        <a href="descarga/" class="dv-primary-button dv-primary-light">Descargar la app <span>→</span></a>
+        <a href="comprar/" class="dv-outline-button">Ver planes y opciones</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="dv-footer">
+    <div class="dv-footer-brand"><img src="assets/images/logo.jpg" alt="" width="44" height="44"><span>DON <strong>VIGI</strong></span></div>
+    <div class="dv-footer-links"><a href="como-funciona/">Cómo funciona</a><a href="nosotros/">Nosotros</a><a href="comprar/">Comprar</a><a href="descarga/">Descarga</a><a href="contacto/">Contacto</a><a href="privacidad/">Privacidad</a></div>
+    <p>© 2026 DON VIGI · Herramienta independiente para personal policial.</p>
   </footer>
 
-  <!-- FAB WA (Abajo Derecha) -->
-  <a href="https://wa.me/5493417190648?text=Hola%2C%20dame%20informacion%20sobre%20DON%20VIGI" target="_blank" class="fab-wa" title="Soporte Directo">
+  <a href="https://wa.me/5493417190648?text=Hola%2C%20dame%20informacion%20sobre%20DON%20VIGI" target="_blank" rel="noopener" class="fab-wa" title="Consultar por WhatsApp" aria-label="Consultar por WhatsApp">
     <svg viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.4 0 12.031c0 2.63.829 5.088 2.298 7.15L.306 24l5.06-1.99a11.967 11.967 0 006.665 2.012c6.633 0 12.031-5.401 12.031-12.032C24.062 5.4 18.664 0 12.031 0zm0 21.996a9.92 9.92 0 01-5.074-1.39l-.364-.216-3.766 1.482 1.006-3.668-.237-.377a9.945 9.945 0 01-1.52-5.28c0-5.495 4.475-9.969 9.97-9.969 5.494 0 9.968 4.474 9.968 9.969 0 5.496-4.474 9.969-9.968 9.969zm5.485-7.464c-.301-.151-1.78-.88-2.057-.98-.276-.1-.478-.151-.679.15-.202.302-.778.98-.954 1.18-.176.202-.351.227-.653.076-.301-.15-1.272-.469-2.422-1.495-.895-.799-1.5-1.785-1.676-2.086-.176-.301-.019-.464.131-.615.136-.135.302-.351.453-.527.151-.176.201-.302.302-.503.1-.202.05-.378-.025-.528-.076-.151-.679-1.637-.929-2.242-.244-.59-.492-.51-.679-.52-.176-.008-.377-.01-.578-.01-.202 0-.528.076-.804.378-.276.302-1.055 1.03-1.055 2.513 0 1.483 1.08 2.917 1.231 3.118.151.202 2.125 3.245 5.148 4.549.719.31 1.28.496 1.718.635.723.23 1.381.198 1.899.12.579-.086 1.78-.728 2.03-1.433.252-.705.252-1.309.176-1.434-.075-.126-.276-.202-.578-.352z"/></svg>
   </a>
+
 
   <!-- SCRIPTS -->
   <script>
